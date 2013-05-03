@@ -11,6 +11,6 @@
 
 @implementation EntityTest2
 -(void) initForeignKeys{
-    self.onetomanyfk = [[FWFForeignKey_OneToMany alloc] initWithClass:[EntityTest1 class]];
+    self.onetomanyfk = [[FWFRelationship_OneToMany alloc] initWithClass:[EntityTest1 class]];
 }
 @end

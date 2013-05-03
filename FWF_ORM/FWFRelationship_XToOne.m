@@ -5,7 +5,7 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import "FWFForeignKey_XToOne.h"
+#import "FWFRelationship_XToOne.h"
 
 #import "ClassUtility.h"
 #import "commonClassExtensions.h"
@@ -15,7 +15,7 @@
 #import "FWF_Utils.h"
 
 
-@implementation FWFForeignKey_XToOne{
+@implementation FWFRelationship_XToOne{
     FWF_FK_ACTION _actionOnDelete;    
 }
 
@@ -47,10 +47,10 @@
         self->_referencedEntityPk = 0;
         #ifdef FWF_LAZY_ERRORS
             #if FWF_LAZY_ERRORS == false
-                @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_FOREIGN_KEY);
+                @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_RELATIONSHIP);
             #endif
         #else
-            @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_FOREIGN_KEY);
+            @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_RELATIONSHIP);
         #endif
         return false;
     }
@@ -119,9 +119,9 @@
 
 - (NSString *)description {
     if (_referencedEntityPk > 0) {
-        return [NSString stringWithFormat:@"<FWFForeignKey_XToOne: linked to %@, pk %lu>", [self referencedEntityName], (long)_referencedEntityPk];
+        return [NSString stringWithFormat:@"<FWFRelationship_XToOne: linked to %@, pk %lu>", [self referencedEntityName], (long)_referencedEntityPk];
     }
-	return [NSString stringWithFormat:@"<FWFForeignKey_XToOne: linked to %@, no referenced entity>", [self referencedEntityName]];
+	return [NSString stringWithFormat:@"<FWFRelationship_XToOne: linked to %@, no referenced entity>", [self referencedEntityName]];
 }
 
 - (void) setActionOnDelete:(FWF_FK_ACTION) action{

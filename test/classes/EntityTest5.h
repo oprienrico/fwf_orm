@@ -17,7 +17,7 @@
     
     NSArray *list;//generic data
     
-    FWFForeignKey_XToOne *foreignKey1;
+    FWFRelationship_XToOne *foreignKey1;
     
 }
 
@@ -28,6 +28,6 @@
 @property (nonatomic, strong) OBJBool *objbool;
 @property (nonatomic, strong) NSArray *list;
 
-@property (nonatomic, strong) FWFForeignKey_XToOne *foreignKey1;
+@property (nonatomic, strong) FWFRelationship_XToOne *foreignKey1;
 
 @end

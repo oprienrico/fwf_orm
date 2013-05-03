@@ -44,11 +44,11 @@
     FWFList *listobjs = [[EntityTest objects] all];
     NSLog(@"serialize:\n%@",[listobjs serializeWithDictionary]);
     
-    EntityTest *retrievedobj = [[EntityTest objects] getFirstOrNilWithSQLPredicate:@"name='Jack'"];
+    EntityTest *retrievedobj = [[EntityTest objects] firstObjOrNilWithSQLPredicate:@"name='Jack'"];
     NSLog(@"retrieved obj\n%@",[retrievedobj serializeWithDictionary]);
     
     //chained queries
-    retrievedobj = [[[EntityTest objects] filterWithSQLPredicate:@"number=11"] getFirstOrNilWithSQLPredicate:@"name='Mario'"];
+    retrievedobj = [[[EntityTest objects] filterWithSQLPredicate:@"number=11"] firstObjOrNilWithSQLPredicate:@"name='Mario'"];
     NSLog(@"retrieved obj with chained queryes\n%@",[retrievedobj serializeWithDictionary]);
     
     //delete every object selected previously (in this case all objects)

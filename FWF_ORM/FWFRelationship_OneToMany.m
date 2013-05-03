@@ -5,16 +5,16 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import "FWFForeignKey_OneToMany.h"
+#import "FWFRelationship_OneToMany.h"
 #import "FWF_Costants.h"
 #import "ClassUtility.h"
 #import "commonClassExtensions.h"
 #import "newOBJDataTypes.h"
 #import "FWFEntity.h"
 #import "FWFList.h"
-#import "FWFForeignKey_XToOne.h"
+#import "FWFRelationship_XToOne.h"
 
-@interface FWFForeignKey_OneToMany(){
+@interface FWFRelationship_OneToMany(){
     id delegate;
 }
 
@@ -24,7 +24,7 @@
 
 @end
 
-@implementation FWFForeignKey_OneToMany
+@implementation FWFRelationship_OneToMany
 
 - (id) initWithClass:(Class)cl{
     self = [super initWithClass:cl];
@@ -53,7 +53,7 @@
         Class attrClass = [NSClassFromString(attrClassName) class];
         
         //if it's a foreign key add to array (consequently used to interrogate the database)
-        if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+        if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
             //recupera tutti gli attributi che si riferiscono a questa classe
             if ([[[attributesValues objectForKey:attrName] referencedEntityClass] isSubclassOfClass:[delegate class]]) {
                 //create query conditions to search in the related entity (attribute = %pk_of_this_entity)
@@ -81,7 +81,7 @@
         Class attrClass = [NSClassFromString(attrClassName) class];
         
         //if it's a foreign key add to array (consequently used to interrogate the database)
-        if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+        if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
             //recupera tutti gli attributi che si riferiscono a questa classe
             if ([[[attributesValues objectForKey:attrName] referencedEntityClass] isSubclassOfClass:[delegate class]] && [attrName isEqualToString:fkName]) {
                 fk_found = true;
@@ -92,7 +92,7 @@
     }];
     
     if (!fk_found) {
-        @throw FWF_EXCEPTION_FOREIGN_KEY_DOES_NOT_EXIST;
+        @throw FWF_EXCEPTION_RELATIONSHIP_DOES_NOT_EXIST;
     }
     
     FWFList *listObjs = [[FWFList alloc] initWithClass:[self referencedEntityClass]];
@@ -115,7 +115,7 @@
         Class attrClass = [NSClassFromString(attrClassName) class];
         
         //if it's a foreign key add to array (consequently used to interrogate the database)
-        if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+        if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
             //recupera tutti gli attributi che si riferiscono a questa classe
             if ([[[attributesValues objectForKey:attrName] referencedEntityClass] isSubclassOfClass:[delegate class]] && [fkNameList containsObject:attrName]) {
                 //create query conditions to search in the related entity (attribute = %pk_of_this_entity)
@@ -132,7 +132,7 @@
     if (fks_found < nfkSelected) {
         //it means that the fkNameList contained some values that are not foreign keys in the referenced entity
         //throw an exception
-        @throw FWF_EXCEPTION_FOREIGN_KEY_DOES_NOT_EXIST;
+        @throw FWF_EXCEPTION_RELATIONSHIP_DOES_NOT_EXIST;
     }
     
     FWFList *listObjs = [[FWFList alloc] initWithClass:[self referencedEntityClass]];
@@ -143,6 +143,6 @@
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<FWFForeignKey_OneToMany: linked to %@>", [self referencedEntityName]];
+	return [NSString stringWithFormat:@"<FWFRelationship_OneToMany: linked to %@>", [self referencedEntityName]];
 }
 @end

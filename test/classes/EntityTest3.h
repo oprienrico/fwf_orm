@@ -11,10 +11,10 @@
 @interface EntityTest3 : FWFEntity{
     NSString *name;
     
-    FWFForeignKey_ManyToMany *onetomanyfk;
+    FWFRelationship_ManyToMany *onetomanyfk;
 }
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) FWFForeignKey_ManyToMany *manytomanyfk;
+@property (nonatomic, strong) FWFRelationship_ManyToMany *manytomanyfk;
 
 @end

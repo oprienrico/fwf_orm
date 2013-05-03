@@ -11,6 +11,6 @@
 
 @implementation EntityTest4
 -(void) initForeignKeys{
-    self.manytomanyfk = [[FWFForeignKey_ManyToMany alloc] initWithClass:[EntityTest3 class]];
+    self.manytomanyfk = [[FWFRelationship_ManyToMany alloc] initWithClass:[EntityTest3 class]];
 }
 @end

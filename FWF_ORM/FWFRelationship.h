@@ -10,7 +10,7 @@
 #import <Foundation/Foundation.h>
 #import "FMDbWrapper.h"
 
-@interface FWFForeignKey : NSObject{
+@interface FWFRelationship : NSObject{
     Class referencedEntityClass;
 }
 

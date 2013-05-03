@@ -5,12 +5,12 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import "FWFForeignKey.h"
+#import "FWFRelationship.h"
 #import "FWF_Costants.h"
 @class FWFEntity;
 
 
-@interface FWFForeignKey_XToOne : FWFForeignKey{
+@interface FWFRelationship_XToOne : FWFRelationship{
     NSUInteger referencedEntityPk;
 }
 @property (setter=setObjectPk:, getter=objectPk, nonatomic, assign) NSUInteger referencedEntityPk;

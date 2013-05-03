@@ -22,7 +22,7 @@
 - (void) resetSQLPredicateList;
 - (FWFList *) filterWithPredicate:(NSString *)predicate;// chained o meglio consecutive filter yei!
 
-- (id) getFirstOrNilWithSQLPredicate:(NSString *)predicate;
+- (id) firstObjOrNilWithSQLPredicate:(NSString *)predicate;
 
 - (void) deleteFromStorage;
 

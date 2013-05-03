@@ -5,7 +5,7 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import "FWFForeignKey.h"
+#import "FWFRelationship.h"
 
 #import "ClassUtility.h"
 #import "commonClassExtensions.h"
@@ -16,7 +16,7 @@
 #import "FWF_Utils.h"
 
 
-@implementation FWFForeignKey
+@implementation FWFRelationship
 @synthesize referencedEntityClass = _referencedEntityClass;
 
 -(id)initWithClass:(Class)cl{

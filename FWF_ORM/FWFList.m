@@ -13,8 +13,8 @@
 
 #import "FWFEntity.h"
 #import "FWF_Costants.h"
-#import "FWFForeignKey_XToOne.h"
-#import "FWFForeignKey_OneToMany.h"
+#import "FWFRelationship_XToOne.h"
+#import "FWFRelationship_OneToMany.h"
 #import "FWF_Utils.h"
 
 @interface FWFList (){
@@ -145,7 +145,7 @@
     return [self listOBJ];
 }
 
-- (id) getFirstOrNilWithSQLPredicate:(NSString *)predicate {
+- (id) firstObjOrNilWithSQLPredicate:(NSString *)predicate {
     if ([self wasLoadedDataFromDb]){
         //if predicate is empty return the actual list
         if([predicate length]<1)
@@ -161,7 +161,7 @@
     
     return [[self listOBJ] objectWithListIndex:0];
 }
-
+  
 - (FWFList *) filterWithPredicate:(NSString *)predicate {
     if ([self wasLoadedDataFromDb]){
         //if predicate is empty return the actual list
@@ -245,8 +245,7 @@
 }
 
 // In the implementation
--(id)copyWithZone:(NSZone *)zone
-{
+-(id)copyWithZone:(NSZone *)zone{
     // We'll ignore the zone for now
     FWFList *another = [[FWFList allocWithZone:zone] init];
 

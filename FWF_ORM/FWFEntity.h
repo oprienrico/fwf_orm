@@ -15,14 +15,14 @@
 
 @class FWFList;
 
-@protocol FWFForeignKeySupport
+@protocol FWFRELATIONSHIPupport
 
 @optional
 - (void) initForeignKeys;
 
 @end
 
-@interface FWFEntity : NSObject <FWFForeignKeySupport> {
+@interface FWFEntity : NSObject <FWFRELATIONSHIPupport> {
     BOOL __deleted;
 }
 

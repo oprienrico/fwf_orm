@@ -12,13 +12,13 @@
     NSString *name;
     NSNumber *number;
 
-    FWFForeignKey_XToOne *foreignKey1;
-    FWFForeignKey_XToOne *foreignKey2;
+    FWFRelationship_XToOne *foreignKey1;
+    FWFRelationship_XToOne *foreignKey2;
 }
 
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSNumber *number;
 
-@property (nonatomic, strong) FWFForeignKey_XToOne *foreignKey1;
-@property (nonatomic, strong) FWFForeignKey_XToOne *foreignKey2;
+@property (nonatomic, strong) FWFRelationship_XToOne *foreignKey1;
+@property (nonatomic, strong) FWFRelationship_XToOne *foreignKey2;
 @end

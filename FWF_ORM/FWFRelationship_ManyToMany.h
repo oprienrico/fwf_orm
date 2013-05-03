@@ -5,11 +5,11 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import "FWFForeignKey.h"
+#import "FWFRelationship.h"
 @class FWFList;
 @class FWFEntity;
 
-@interface FWFForeignKey_ManyToMany : FWFForeignKey
+@interface FWFRelationship_ManyToMany : FWFRelationship
 
 - (id) initWithClass:(Class)cl andDelegate:(id) del;
 

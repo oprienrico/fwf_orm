@@ -36,10 +36,10 @@
 		DF91D9961730A12700E1AD1E /* FWF_ORM.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9651730A12700E1AD1E /* FWF_ORM.m */; };
 		DF91D9971730A12700E1AD1E /* FWF_Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9671730A12700E1AD1E /* FWF_Utils.m */; };
 		DF91D9981730A12700E1AD1E /* FWFEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9691730A12700E1AD1E /* FWFEntity.m */; };
-		DF91D9991730A12700E1AD1E /* FWFForeignKey.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D96B1730A12700E1AD1E /* FWFForeignKey.m */; };
-		DF91D99A1730A12700E1AD1E /* FWFForeignKey_ManyToMany.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D96D1730A12700E1AD1E /* FWFForeignKey_ManyToMany.m */; };
-		DF91D99B1730A12700E1AD1E /* FWFForeignKey_OneToMany.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D96F1730A12700E1AD1E /* FWFForeignKey_OneToMany.m */; };
-		DF91D99C1730A12700E1AD1E /* FWFForeignKey_XToOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9711730A12700E1AD1E /* FWFForeignKey_XToOne.m */; };
+		DF91D9991730A12700E1AD1E /* FWFRelationship.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D96B1730A12700E1AD1E /* FWFRelationship.m */; };
+		DF91D99A1730A12700E1AD1E /* FWFRelationship_ManyToMany.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D96D1730A12700E1AD1E /* FWFRelationship_ManyToMany.m */; };
+		DF91D99B1730A12700E1AD1E /* FWFRelationship_OneToMany.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D96F1730A12700E1AD1E /* FWFRelationship_OneToMany.m */; };
+		DF91D99C1730A12700E1AD1E /* FWFRelationship_XToOne.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9711730A12700E1AD1E /* FWFRelationship_XToOne.m */; };
 		DF91D99D1730A12700E1AD1E /* FWFList.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9731730A12700E1AD1E /* FWFList.m */; };
 		DF91D99E1730A12700E1AD1E /* ClassUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9761730A12700E1AD1E /* ClassUtility.m */; };
 		DF91D99F1730A12700E1AD1E /* DateUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9781730A12700E1AD1E /* DateUtils.m */; };
@@ -124,14 +124,14 @@
 		DF91D9671730A12700E1AD1E /* FWF_Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWF_Utils.m; sourceTree = "<group>"; };
 		DF91D9681730A12700E1AD1E /* FWFEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFEntity.h; sourceTree = "<group>"; };
 		DF91D9691730A12700E1AD1E /* FWFEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFEntity.m; sourceTree = "<group>"; };
-		DF91D96A1730A12700E1AD1E /* FWFForeignKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFForeignKey.h; sourceTree = "<group>"; };
-		DF91D96B1730A12700E1AD1E /* FWFForeignKey.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFForeignKey.m; sourceTree = "<group>"; };
-		DF91D96C1730A12700E1AD1E /* FWFForeignKey_ManyToMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFForeignKey_ManyToMany.h; sourceTree = "<group>"; };
-		DF91D96D1730A12700E1AD1E /* FWFForeignKey_ManyToMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFForeignKey_ManyToMany.m; sourceTree = "<group>"; };
-		DF91D96E1730A12700E1AD1E /* FWFForeignKey_OneToMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFForeignKey_OneToMany.h; sourceTree = "<group>"; };
-		DF91D96F1730A12700E1AD1E /* FWFForeignKey_OneToMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFForeignKey_OneToMany.m; sourceTree = "<group>"; };
-		DF91D9701730A12700E1AD1E /* FWFForeignKey_XToOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFForeignKey_XToOne.h; sourceTree = "<group>"; };
-		DF91D9711730A12700E1AD1E /* FWFForeignKey_XToOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFForeignKey_XToOne.m; sourceTree = "<group>"; };
+		DF91D96A1730A12700E1AD1E /* FWFRelationship.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFRelationship.h; sourceTree = "<group>"; };
+		DF91D96B1730A12700E1AD1E /* FWFRelationship.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFRelationship.m; sourceTree = "<group>"; };
+		DF91D96C1730A12700E1AD1E /* FWFRelationship_ManyToMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFRelationship_ManyToMany.h; sourceTree = "<group>"; };
+		DF91D96D1730A12700E1AD1E /* FWFRelationship_ManyToMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFRelationship_ManyToMany.m; sourceTree = "<group>"; };
+		DF91D96E1730A12700E1AD1E /* FWFRelationship_OneToMany.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFRelationship_OneToMany.h; sourceTree = "<group>"; };
+		DF91D96F1730A12700E1AD1E /* FWFRelationship_OneToMany.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFRelationship_OneToMany.m; sourceTree = "<group>"; };
+		DF91D9701730A12700E1AD1E /* FWFRelationship_XToOne.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFRelationship_XToOne.h; sourceTree = "<group>"; };
+		DF91D9711730A12700E1AD1E /* FWFRelationship_XToOne.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFRelationship_XToOne.m; sourceTree = "<group>"; };
 		DF91D9721730A12700E1AD1E /* FWFList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFList.h; sourceTree = "<group>"; };
 		DF91D9731730A12700E1AD1E /* FWFList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFList.m; sourceTree = "<group>"; };
 		DF91D9751730A12700E1AD1E /* ClassUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassUtility.h; sourceTree = "<group>"; };
@@ -233,14 +233,14 @@
 				DF91D9671730A12700E1AD1E /* FWF_Utils.m */,
 				DF91D9681730A12700E1AD1E /* FWFEntity.h */,
 				DF91D9691730A12700E1AD1E /* FWFEntity.m */,
-				DF91D96A1730A12700E1AD1E /* FWFForeignKey.h */,
-				DF91D96B1730A12700E1AD1E /* FWFForeignKey.m */,
-				DF91D96C1730A12700E1AD1E /* FWFForeignKey_ManyToMany.h */,
-				DF91D96D1730A12700E1AD1E /* FWFForeignKey_ManyToMany.m */,
-				DF91D96E1730A12700E1AD1E /* FWFForeignKey_OneToMany.h */,
-				DF91D96F1730A12700E1AD1E /* FWFForeignKey_OneToMany.m */,
-				DF91D9701730A12700E1AD1E /* FWFForeignKey_XToOne.h */,
-				DF91D9711730A12700E1AD1E /* FWFForeignKey_XToOne.m */,
+				DF91D96A1730A12700E1AD1E /* FWFRelationship.h */,
+				DF91D96B1730A12700E1AD1E /* FWFRelationship.m */,
+				DF91D96C1730A12700E1AD1E /* FWFRelationship_ManyToMany.h */,
+				DF91D96D1730A12700E1AD1E /* FWFRelationship_ManyToMany.m */,
+				DF91D96E1730A12700E1AD1E /* FWFRelationship_OneToMany.h */,
+				DF91D96F1730A12700E1AD1E /* FWFRelationship_OneToMany.m */,
+				DF91D9701730A12700E1AD1E /* FWFRelationship_XToOne.h */,
+				DF91D9711730A12700E1AD1E /* FWFRelationship_XToOne.m */,
 				DF91D9721730A12700E1AD1E /* FWFList.h */,
 				DF91D9731730A12700E1AD1E /* FWFList.m */,
 				DF91D9741730A12700E1AD1E /* utils */,
@@ -416,10 +416,10 @@
 				DF91D9961730A12700E1AD1E /* FWF_ORM.m in Sources */,
 				DF91D9971730A12700E1AD1E /* FWF_Utils.m in Sources */,
 				DF91D9981730A12700E1AD1E /* FWFEntity.m in Sources */,
-				DF91D9991730A12700E1AD1E /* FWFForeignKey.m in Sources */,
-				DF91D99A1730A12700E1AD1E /* FWFForeignKey_ManyToMany.m in Sources */,
-				DF91D99B1730A12700E1AD1E /* FWFForeignKey_OneToMany.m in Sources */,
-				DF91D99C1730A12700E1AD1E /* FWFForeignKey_XToOne.m in Sources */,
+				DF91D9991730A12700E1AD1E /* FWFRelationship.m in Sources */,
+				DF91D99A1730A12700E1AD1E /* FWFRelationship_ManyToMany.m in Sources */,
+				DF91D99B1730A12700E1AD1E /* FWFRelationship_OneToMany.m in Sources */,
+				DF91D99C1730A12700E1AD1E /* FWFRelationship_XToOne.m in Sources */,
 				DF91D99D1730A12700E1AD1E /* FWFList.m in Sources */,
 				DF91D99E1730A12700E1AD1E /* ClassUtility.m in Sources */,
 				DF91D99F1730A12700E1AD1E /* DateUtils.m in Sources */,

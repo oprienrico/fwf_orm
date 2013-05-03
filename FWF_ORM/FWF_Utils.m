@@ -13,9 +13,9 @@
 
 #import "FWFEntity.h"
 #import "FWF_Costants.h"
-#import "FWFForeignKey_XToOne.h"
-#import "FWFForeignKey_OneToMany.h"
-#import "FWFForeignKey_ManyToMany.h"
+#import "FWFRelationship_XToOne.h"
+#import "FWFRelationship_OneToMany.h"
+#import "FWFRelationship_ManyToMany.h"
 #import "NSMutableDictionary-ext1.h"
 
 @implementation FWF_Utils
@@ -38,9 +38,9 @@
 + (NSMutableDictionary *) filterFKMutable:(NSMutableDictionary *) dictio{
     //remove every Foreign key one to many
     for (id attrName in dictio.allKeys) {
-        if ([[dictio objectForKey:attrName] isKindOfClass:[FWFForeignKey_OneToMany class]]) {
+        if ([[dictio objectForKey:attrName] isKindOfClass:[FWFRelationship_OneToMany class]]) {
             [dictio removeObjectForKey:attrName];
-        }else if ([[dictio objectForKey:attrName] isKindOfClass:[FWFForeignKey_ManyToMany class]]) {
+        }else if ([[dictio objectForKey:attrName] isKindOfClass:[FWFRelationship_ManyToMany class]]) {
             [dictio removeObjectForKey:attrName];
         }
     }
@@ -59,11 +59,11 @@
         Class attrClass = [NSClassFromString([attributesType objectForKey:attrName]) class];
         
         //if it's a foreign key let's manipolate that
-        if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+        if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
             [[item valueForKey:attrName] setObjectWithPkNumber:fmdbObj];
-        }else if ([attrClass isSubclassOfClass:[FWFForeignKey_OneToMany class]]) {
+        }else if ([attrClass isSubclassOfClass:[FWFRelationship_OneToMany class]]) {
             //nothing to do
-        }else if ([attrClass isSubclassOfClass:[FWFForeignKey_ManyToMany class]]) {
+        }else if ([attrClass isSubclassOfClass:[FWFRelationship_ManyToMany class]]) {
             //nothing to do
         }else{
             //set attribute

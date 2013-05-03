@@ -16,8 +16,8 @@
  }*/
 
 -(void) initForeignKeys{
-    self.foreignKey1 = [[FWFForeignKey_XToOne alloc] initWithClass:[EntityTest2 class]];
-    self.foreignKey2 = [[FWFForeignKey_XToOne alloc] initWithClass:[EntityTest2 class]];
+    self.foreignKey1 = [[FWFRelationship_XToOne alloc] initWithClass:[EntityTest2 class]];
+    self.foreignKey2 = [[FWFRelationship_XToOne alloc] initWithClass:[EntityTest2 class]];
     //[self.foreignKey1 setActionOnDelete:FWF_FK_ACTION_CASCADE];
 }
 @end

@@ -18,10 +18,10 @@
 
 #import "FWFList.h"
 #import "FWFEntity.h"
-#import "FWFForeignKey.h"
-#import "FWFForeignKey_OneToMany.h"
-#import "FWFForeignKey_XToOne.h"
-#import "FWFForeignKey_ManyToMany.h"
+#import "FWFRelationship.h"
+#import "FWFRelationship_OneToMany.h"
+#import "FWFRelationship_XToOne.h"
+#import "FWFRelationship_ManyToMany.h"
 
 
 @interface FWF : NSObject

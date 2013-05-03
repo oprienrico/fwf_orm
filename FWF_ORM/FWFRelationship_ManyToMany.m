@@ -5,7 +5,7 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import "FWFForeignKey_ManyToMany.h"
+#import "FWFRelationship_ManyToMany.h"
 #import "ClassUtility.h"
 #import "commonClassExtensions.h"
 #import "newOBJDataTypes.h"
@@ -14,9 +14,9 @@
 #import "FWFList.h"
 #import "FWF_Utils.h"
 
-#import "FWFForeignKey_XToOne.h"
+#import "FWFRelationship_XToOne.h"
 
-@interface FWFForeignKey_ManyToMany(){
+@interface FWFRelationship_ManyToMany(){
     id delegate;
 }
 
@@ -25,7 +25,7 @@
 - (void) setDelegate:(id)del;
 @end
 
-@implementation FWFForeignKey_ManyToMany
+@implementation FWFRelationship_ManyToMany
 
 - (id) initWithClass:(Class)cl{
     self = [super initWithClass:cl];
@@ -119,10 +119,10 @@
     if (![obj isKindOfClass:[self referencedEntityClass]]) {
         #ifdef FWF_LAZY_ERRORS
             #if FWF_LAZY_ERRORS == false
-                @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_FOREIGN_KEY);
+                @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_RELATIONSHIP);
             #endif
         #else
-            @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_FOREIGN_KEY);
+            @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_RELATIONSHIP);
         #endif
         return false;
     }
@@ -175,10 +175,10 @@
     if (![obj isKindOfClass:[self referencedEntityClass]]) {
         #ifdef FWF_LAZY_ERRORS
             #if FWF_LAZY_ERRORS == false
-                @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_FOREIGN_KEY);
+                @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_RELATIONSHIP);
             #endif
         #else
-            @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_FOREIGN_KEY);
+            @throw (FWF_EXCEPTION_OBJECT_NOT_ISTANCE_OF_REFERENCED_CLASS_IN_RELATIONSHIP);
         #endif
         return false;
     }
@@ -229,7 +229,7 @@
 }
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"<FWFForeignKey_ManyToMany: linked to %@>", [self referencedEntityName]];
+	return [NSString stringWithFormat:@"<FWFRelationship_ManyToMany: linked to %@>", [self referencedEntityName]];
 }
 
 @end

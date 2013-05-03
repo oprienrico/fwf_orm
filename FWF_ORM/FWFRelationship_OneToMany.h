@@ -6,10 +6,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "FWFForeignKey.h"
+#import "FWFRelationship.h"
 @class FWFList;
 
-@interface FWFForeignKey_OneToMany : FWFForeignKey
+@interface FWFRelationship_OneToMany : FWFRelationship
 
 - (id) initWithClass:(Class)cl andDelegate:(id) del;
 

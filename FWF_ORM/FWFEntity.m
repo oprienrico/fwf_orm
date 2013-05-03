@@ -10,9 +10,9 @@
 #import "ClassUtility.h"
 #import "newOBJDataTypes.h"
 #import "FWF_Costants.h"
-#import "FWFForeignKey_XToOne.h"
-#import "FWFForeignKey_OneToMany.h"
-#import "FWFForeignKey_ManyToMany.h"
+#import "FWFRelationship_XToOne.h"
+#import "FWFRelationship_OneToMany.h"
+#import "FWFRelationship_ManyToMany.h"
 #import "FWFList.h"
 #import "FWF_Utils.h"
 
@@ -49,26 +49,26 @@
     
     [attributes enumerateKeysAndObjectsUsingBlock:^(id attrName, id attrClassName, BOOL *stop) {
         Class attrClass = [NSClassFromString(attrClassName) class];
-        if ([attrClass isSubclassOfClass:[FWFForeignKey class]]) {
+        if ([attrClass isSubclassOfClass:[FWFRelationship class]]) {
             if (wasInitFKNotCalled) {
                 wasInitFKNotCalled = NO;
                 if([self respondsToSelector:@selector(initForeignKeys)]){
                     [self initForeignKeys];
                 }else
-                    @throw(FWF_EXCEPTION_FOREIGN_KEYS_NOT_INITIALIZED);
+                    @throw(FWF_EXCEPTION_RELATIONSHIP_NOT_INITIALIZED);
             }
             id value = [self valueForKey:attrName];
             if (value == nil)
-                @throw(FWF_EXCEPTION_FOREIGN_KEYS_NOT_INITIALIZED);
+                @throw(FWF_EXCEPTION_RELATIONSHIP_NOT_INITIALIZED);
             
-            if ([attrClass isSubclassOfClass:[FWFForeignKey_OneToMany class]]) {
+            if ([attrClass isSubclassOfClass:[FWFRelationship_OneToMany class]]) {
                 //if is not already setted
                 if ([value delegate] == nil) {
                     [value setDelegate:self];
                 }else if ([value delegate] == [NSNull null]) {
                     [value setDelegate:self];
                 }else if (![[value delegate] isKindOfClass:[FWFEntity class]]) {
-                    @throw(FWF_EXCEPTION_FOREIGN_KEYS_DELEGATE_IS_NOT_ENTITY);
+                    @throw(FWF_EXCEPTION_RELATIONSHIP_DELEGATE_IS_NOT_ENTITY);
                 }
                 
                 //need to verify that there is at least one linked XTOOne attibute
@@ -82,7 +82,7 @@
                     Class attrClass = [NSClassFromString(attrClassName) class];
                     
                     //if it's a foreign key add to array (consequently used to interrogate the database)
-                    if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+                    if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
                         //check if there is one
                         if ([[[attributesValues objectForKey:attrName] referencedEntityClass] isSubclassOfClass:[self class]]) {
                             notFound = false;
@@ -92,11 +92,11 @@
                 }];
                 //throw exception if there is a problem
                 if (notFound) {
-                    @throw FWF_EXCEPTION_REFERENCED_FOREIGN_KEY_DOES_NOT_HAVE_A_CORRESPONDING_KEY;
+                    @throw FWF_EXCEPTION_REFERENCED_RELATIONSHIP_DOES_NOT_HAVE_A_CORRESPONDING_KEY;
                 }
-            }else if([attrClass isSubclassOfClass:[FWFForeignKey_ManyToMany class]]){
+            }else if([attrClass isSubclassOfClass:[FWFRelationship_ManyToMany class]]){
                 if (fkmanymanyfound) {
-                    @throw FWF_EXCEPTION_FOREIGN_KEY_MULTIPLE_MANY_TO_MANY_ATTRIBUTE;
+                    @throw FWF_EXCEPTION_RELATIONSHIP_MULTIPLE_MANY_TO_MANY_ATTRIBUTE;
                 }
                 fkmanymanyfound = true;
                 
@@ -106,7 +106,7 @@
                 }else if ([value delegate] == [NSNull null]) {
                     [value setDelegate:self];
                 }else if (![[value delegate] isKindOfClass:[FWFEntity class]]) {
-                    @throw(FWF_EXCEPTION_FOREIGN_KEYS_DELEGATE_IS_NOT_ENTITY);
+                    @throw(FWF_EXCEPTION_RELATIONSHIP_DELEGATE_IS_NOT_ENTITY);
                 }
             }
         }
@@ -129,12 +129,12 @@
         [attributes enumerateKeysAndObjectsUsingBlock:^(id attrName, id obj, BOOL *stop) {
             Class attrClass = [NSClassFromString(obj) class];
 
-            if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+            if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
                 fksql_vars = [fksql_vars stringByAppendingFormat:@",%@ INTEGER", attrName];
                 fksql_constr = [fksql_constr stringByAppendingFormat:@", FOREIGN KEY (%@) REFERENCES %@ (pk) ON DELETE %@", attrName, [[self valueForKey:attrName] referencedEntityName], [[self valueForKey:attrName] actionOnDelete]];
-            }else if ([attrClass isSubclassOfClass:[FWFForeignKey_OneToMany class]]) {
+            }else if ([attrClass isSubclassOfClass:[FWFRelationship_OneToMany class]]) {
 
-            }else if ([attrClass isSubclassOfClass:[FWFForeignKey_ManyToMany class]]) {
+            }else if ([attrClass isSubclassOfClass:[FWFRelationship_ManyToMany class]]) {
                 id value = [self valueForKey:attrName];
                 if(![db tableExists:[value getLookupTableName]]){
                     NSString *ref_name = [value referencedEntityName];
@@ -198,13 +198,13 @@
             Class attrClass = [NSClassFromString([attributesType objectForKey:attrName]) class];
             
             //if it's a foreign key let's manipolate that
-            if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+            if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
                 if (attrValue==nil){
-                    @throw (FWF_EXCEPTION_FOREIGN_KEYS_IS_NULL);
+                    @throw (FWF_EXCEPTION_RELATIONSHIP_IS_NULL);
                 }
             }/*
               not necessary because is already filtered by filters from FWF_Utils
-              else if([attrClass isSubclassOfClass:[FWFForeignKey_OneToMany class]])
+              else if([attrClass isSubclassOfClass:[FWFRelationship_OneToMany class]])
                 return;//skip and do nothing*/
 
             //do not remove any null objects because you maybe want to set those attribute as null into the db,
@@ -237,15 +237,15 @@
             Class attrClass = [NSClassFromString([attributesType objectForKey:attrName]) class];
             
             //if it's a foreign key let's manipolate that
-            if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
+            if ([attrClass isSubclassOfClass:[FWFRelationship_XToOne class]]) {
                 if (attrValue==nil){
-                    @throw (FWF_EXCEPTION_FOREIGN_KEYS_IS_NULL);
+                    @throw (FWF_EXCEPTION_RELATIONSHIP_IS_NULL);
                 }else if (attrValue==[NSNull null]){
-                    @throw (FWF_EXCEPTION_FOREIGN_KEYS_IS_NULL);
+                    @throw (FWF_EXCEPTION_RELATIONSHIP_IS_NULL);
                 }
             }/*
               not necessary because is already filtered by filters from FWF_Utils
-              else if([attrClass isSubclassOfClass:[FWFForeignKey_OneToMany class]])
+              else if([attrClass isSubclassOfClass:[FWFRelationship_OneToMany class]])
               return;//skip and do nothing*/
             
             //if null skip and remove corresponding object
