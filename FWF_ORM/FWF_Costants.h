@@ -11,8 +11,12 @@
 #define FWF_STD_DB_ENGINE [[FMDbWrapper alloc] initDatabaseWithForeignKeys]
 #define FWF_STD_DB_ENGINE_NO_FK [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
 
+
+/*
+ *  Logging Util
+ */
 #ifdef FWF_DEBUG
-    #if FWF_DEBUG == TRUE 
+    #if FWF_DEBUG == TRUE
         #define FWFLog(...) NSLog(__VA_ARGS__)
     #else
         #define FWFLog(...) /* */
@@ -21,7 +25,19 @@
     #define FWFLog(...) /* */
 #endif
 
-//exceptions
+
+
+/*
+ *  SQL Actions (used for the Foreign Keys)
+ */
+typedef enum{
+    FWF_FK_ACTION_SET_NULL,
+    FWF_FK_ACTION_CASCADE
+} FWF_FK_ACTION;
+
+/*
+ *  Exceptions
+ */
 #define FWF_EXCEPTION_PERSISTENCE [NSException exceptionWithName:@"FWF_EXCEPTION_PERSISTENCE" reason:@"During persistence actions the ORM incurred in an error. If the action performed was modyfing some objects, it was not applyed" userInfo:nil]
 #define FWF_EXCEPTION_OBJECT_PERSISTENCE_NOT_ALLOWED [NSException exceptionWithName:@"OBJECT_PERSISTENCE_NOT_ALLOWED" reason:@"object not conform to NSCoding, or specific sqlValue method is not defined" userInfo:nil]
 #define FWF_EXCEPTION_FOREIGN_KEYS_NOT_INITIALIZED [NSException exceptionWithName:@"FOREIGN_KEYS_NOT_INITIALIZED" reason:@"Foreign Keys weren't correctly initialized.\nInit them in:\n-(void) initForeignKeys" userInfo:nil]
@@ -32,3 +48,4 @@
 #define FWF_EXCEPTION_FOREIGN_KEY_MULTIPLE_MANY_TO_MANY_ATTRIBUTE [NSException exceptionWithName:@"FWF_EXCEPTION_FOREIGN_KEY_MULTIPLE_MANY_TO_MANY_ATTRIBUTE" reason:@"The entity is declared with multiple foreign keys. Only one allowed." userInfo:nil]
 #define FWF_EXCEPTION_FOREIGN_KEYS_DELEGATE_IS_NOT_ENTITY [NSException exceptionWithName:@"FOREIGN_KEYS_DELEGATE_IS_NOT_ENTITY" reason:@"A foreign key was setted with a delegate that is not an Entity" userInfo:nil]
 #define FWF_EXCEPTION_REFERENCED_FOREIGN_KEY_DOES_NOT_HAVE_A_CORRESPONDING_KEY [NSException exceptionWithName:@"REFERENCED_FOREIGN_KEY_DOES_NOT_HAVE_A_CORRESPONDING_KEY" reason:@"The OneToMany Foreign Key attribute was setted without setting at least one attribute of type X To One referenced to this entity" userInfo:nil]
+#define FWF_EXCEPTION_FOREIGN_KEY_DOES_NOT_EXIST [NSException exceptionWithName:@"FWF_EXCEPTION_FOREIGN_KEY_DOES_NOT_EXIST" reason:@"The foreign key 'attribute' selected does not exist" userInfo:nil]

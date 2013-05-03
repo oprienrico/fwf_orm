@@ -10,17 +10,19 @@
 #import "ClassUtility.h"
 #import "commonClassExtensions.h"
 #import "newOBJDataTypes.h"
-#import "FWF_Costants.h"
 #import "FMDbWrapper.h"
 #import "FWFEntity.h"
 #import "FWF_Utils.h"
 
 
-@implementation FWFForeignKey_XToOne
+@implementation FWFForeignKey_XToOne{
+    FWF_FK_ACTION _actionOnDelete;    
+}
 
 - (id) initWithClass:(Class)cl{
     if(self = [super initWithClass:cl]){
         _referencedEntityPk = 0;
+        _actionOnDelete = 0;
     }
     
     return self;
@@ -98,7 +100,7 @@
     _referencedEntityPk = [pk unsignedIntegerValue];
 }
 
-- (void) noObject{
+- (void) setNoObject{
     _referencedEntityPk = 0;
 }
 
@@ -122,6 +124,19 @@
 	return [NSString stringWithFormat:@"<FWFForeignKey_XToOne: linked to %@, no referenced entity>", [self referencedEntityName]];
 }
 
+- (void) setActionOnDelete:(FWF_FK_ACTION) action{
+    _actionOnDelete = action;
+}
+
+- (NSString *) actionOnDelete{
+    if(_actionOnDelete==FWF_FK_ACTION_SET_NULL){
+        return @"SET NULL";
+    }else if (_actionOnDelete==FWF_FK_ACTION_CASCADE){
+        return @"CASCADE";
+    }
+    //default
+    return @"SET NULL";
+}
 
 - (NSMutableArray *) populateListWithSQL:(NSString *) sql{
     NSArray *tempList = nil;

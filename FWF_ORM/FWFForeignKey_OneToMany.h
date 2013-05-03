@@ -14,4 +14,7 @@
 - (id) initWithClass:(Class)cl andDelegate:(id) del;
 
 - (FWFList *) objects;
+- (FWFList *) objectsReferencedWithAttribute:(NSString *) fkName;
+- (FWFList *) objectsReferencedWithAttributes:(NSArray *) fkNameList;
+
 @end

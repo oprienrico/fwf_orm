@@ -122,14 +122,16 @@
     FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
     if(![db tableExists:[self getEntityName]]){
         __block NSString *sql = [NSString stringWithFormat: @"CREATE TABLE %@ (pk INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ",[self getEntityName]];
-        __block NSString *fksql = [[NSString alloc] init];
+        __block NSString *fksql_vars = [[NSString alloc] init];
+        __block NSString *fksql_constr = [[NSString alloc] init];
 
         NSDictionary *attributes = [ClassUtility getAttributesTypeFromClass:[self class]];
         [attributes enumerateKeysAndObjectsUsingBlock:^(id attrName, id obj, BOOL *stop) {
             Class attrClass = [NSClassFromString(obj) class];
 
             if ([attrClass isSubclassOfClass:[FWFForeignKey_XToOne class]]) {
-                fksql = [fksql stringByAppendingFormat:@",%@ INTEGER, FOREIGN KEY (%@) REFERENCES %@ (pk) ON DELETE SET NULL", attrName, attrName, [[self valueForKey:attrName] referencedEntityName]];
+                fksql_vars = [fksql_vars stringByAppendingFormat:@",%@ INTEGER", attrName];
+                fksql_constr = [fksql_constr stringByAppendingFormat:@", FOREIGN KEY (%@) REFERENCES %@ (pk) ON DELETE %@", attrName, [[self valueForKey:attrName] referencedEntityName], [[self valueForKey:attrName] actionOnDelete]];
             }else if ([attrClass isSubclassOfClass:[FWFForeignKey_OneToMany class]]) {
 
             }else if ([attrClass isSubclassOfClass:[FWFForeignKey_ManyToMany class]]) {
@@ -144,7 +146,7 @@
                 sql = [sql stringByAppendingFormat:@",%@ %@", attrName, [attrClass sqlType]];
             }
         }];
-        sql = [[sql stringByAppendingString:fksql] stringByAppendingString:@")"];
+        sql = [sql stringByAppendingFormat:@"%@%@)", fksql_vars, fksql_constr];
         FWFLog(@"SQL:\n%@",sql);
         [db executeUpdate:sql];
     }

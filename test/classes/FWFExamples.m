@@ -13,6 +13,7 @@
 #import "EntityTest2.h"
 #import "EntityTest3.h"
 #import "EntityTest4.h"
+#import "EntityTest5.h"
 
 @implementation FWFExamples
 
@@ -59,10 +60,10 @@
     /*
      *  INIT ENTITIES
      */
-    [[EntityTest1 alloc] initEntityPersistence];
+    [[EntityTest5 alloc] initEntityPersistence];
     [[EntityTest2 alloc] initEntityPersistence];
     
-    EntityTest1 *testentity = [[EntityTest1 alloc] init];
+    EntityTest5 *testentity = [[EntityTest5 alloc] init];
     
     testentity.name = @"test4";
     [testentity save];
@@ -87,21 +88,21 @@
     [testentity save];
     NSLog(@"fk objs (entities EntityTest obj) retrieved from entity2 %@",[[[e2 onetomanyfk] objects] serializeWithDictionary]);
     
-    FWFList *tes = [[EntityTest objects] all];
+    FWFList *tes = [[EntityTest5 objects] all];
     NSLog(@"serialize all entities EntityTest\n%@", [tes serializeWithDictionary]);
     
     NSLog(@"fk obj(an entity2 obj) retrieved from entity1 %@", [[[[tes objectWithListIndex:0] foreignKey1] object] serializeWithDictionary]);
     
     
-    EntityTest1 *e = [tes objectWithPk:1];
+    EntityTest5 *e = [tes objectWithPk:1];
     e.name = @"pippo";
     [e save];
     NSLog(@"serialize all 2%@\n", [e serializeWithDictionary]);
-    tes = [[EntityTest1 objects] all];
+    tes = [[EntityTest5 objects] all];
     NSLog(@"serialize all 3\n%@", [tes serializeWithDictionary]);
     
     [[[EntityTest2 objects] all] deleteFromStorage];
-    tes = [[EntityTest1 objects] all];
+    tes = [[EntityTest5 objects] all];
     NSLog(@"serialize all 4\n %@", [tes serializeWithDictionary]);
     
 }
@@ -212,5 +213,43 @@
     }
     NSLog(@"time %lf", duration/ntimes);*/
     NSLog(@"serialized FK manytomany: %@",[[[john.manytomanyfk objects] all] serializeWithDictionary]);
+}
+
++ (void) testRelations2{
+    [[EntityTest1 alloc] initEntityPersistence];
+    [[EntityTest2 alloc] initEntityPersistence];
+    
+    //declare and store objects
+    EntityTest1 *john = [[EntityTest1 alloc] init];
+    john.name = @"john";
+    [john save];
+    EntityTest1 *jack = [[EntityTest1 alloc] init];
+    jack.name = @"jack";
+    [jack save];
+    EntityTest1 *mark = [[EntityTest1 alloc] init];
+    mark.name = @"mark";
+    [mark save];
+    
+    EntityTest2 *chair = [[EntityTest2 alloc] init];
+    chair.name = @"sedia";
+    [chair save];
+    EntityTest2 *table = [[EntityTest2 alloc] init];
+    table.name = @"table";
+    [table save];
+    EntityTest2 *sofa = [[EntityTest2 alloc] init];
+    sofa.name = @"my sofa";
+    [sofa save];
+    EntityTest2 *chocolate = [[EntityTest2 alloc] init];
+    chocolate.name = @"MY CHOCOLATEEE";
+    [chocolate save];
+    
+    [john.foreignKey1 setObjectWithPkOBJInteger:sofa.pkOBJ];
+    [john save];
+    [mark.foreignKey2 setObject:sofa];
+    [mark save];
+
+    NSLog(@"serialize FK many to one \n%@",[[[sofa.onetomanyfk objects] all] serializeWithDictionary]);
+    
+    NSLog(@"select only referenced entities by the foreign key specified \n%@",[[[sofa.onetomanyfk objectsReferencedWithAttribute:@"foreignKey1"] all] serializeWithDictionary]);
 }
 @end

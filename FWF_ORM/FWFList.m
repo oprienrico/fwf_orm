@@ -64,7 +64,7 @@
 
 - (NSMutableArray *) populateListWithSQL:(NSString *) sql{
     FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK; //fk support not needed because we do only select queries (and not complex ones)
-
+    FWFLog(@"sql query:%@",sql);
     FMResultSet *result = [db executeQuery:sql];
 
     if (result == nil) {
@@ -80,7 +80,7 @@
     }
     
     [db close];
-    FWFLog(@"sql query:%@",sql);
+
     
     return tempEntityList;
     

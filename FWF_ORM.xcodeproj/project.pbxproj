@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DF331F34173309C400AC4513 /* EntityTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = DF331F33173309C400AC4513 /* EntityTest1.m */; };
 		DF354017173165E700DAF45C /* EntityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF354016173165E700DAF45C /* EntityTest.m */; };
 		DF91D91417309EC400E1AD1E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF91D91317309EC400E1AD1E /* Foundation.framework */; };
 		DF91D92517309F7500E1AD1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D92417309F7500E1AD1E /* main.m */; };
-		DF91D9311730A0A200E1AD1E /* EntityTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9281730A0A200E1AD1E /* EntityTest1.m */; };
+		DF91D9311730A0A200E1AD1E /* EntityTest5.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9281730A0A200E1AD1E /* EntityTest5.m */; };
 		DF91D9321730A0A200E1AD1E /* EntityTest2.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D92A1730A0A200E1AD1E /* EntityTest2.m */; };
 		DF91D9331730A0A200E1AD1E /* EntityTest3.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D92C1730A0A200E1AD1E /* EntityTest3.m */; };
 		DF91D9341730A0A200E1AD1E /* EntityTest4.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D92E1730A0A200E1AD1E /* EntityTest4.m */; };
@@ -61,6 +62,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		DF331F32173309C400AC4513 /* EntityTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest1.h; sourceTree = "<group>"; };
+		DF331F33173309C400AC4513 /* EntityTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest1.m; sourceTree = "<group>"; };
 		DF354015173165E700DAF45C /* EntityTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest.h; sourceTree = "<group>"; };
 		DF354016173165E700DAF45C /* EntityTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest.m; sourceTree = "<group>"; };
 		DF91D91017309EC400E1AD1E /* FWF_ORM */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FWF_ORM; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,8 +71,8 @@
 		DF91D92217309F7500E1AD1E /* FWF_ORM-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FWF_ORM-Prefix.pch"; sourceTree = "<group>"; };
 		DF91D92317309F7500E1AD1E /* FWF_ORM.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; path = FWF_ORM.1; sourceTree = "<group>"; };
 		DF91D92417309F7500E1AD1E /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DF91D9271730A0A200E1AD1E /* EntityTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest1.h; sourceTree = "<group>"; };
-		DF91D9281730A0A200E1AD1E /* EntityTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest1.m; sourceTree = "<group>"; };
+		DF91D9271730A0A200E1AD1E /* EntityTest5.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest5.h; sourceTree = "<group>"; };
+		DF91D9281730A0A200E1AD1E /* EntityTest5.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest5.m; sourceTree = "<group>"; };
 		DF91D9291730A0A200E1AD1E /* EntityTest2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest2.h; sourceTree = "<group>"; };
 		DF91D92A1730A0A200E1AD1E /* EntityTest2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest2.m; sourceTree = "<group>"; };
 		DF91D92B1730A0A200E1AD1E /* EntityTest3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest3.h; sourceTree = "<group>"; };
@@ -201,14 +204,16 @@
 			children = (
 				DF354015173165E700DAF45C /* EntityTest.h */,
 				DF354016173165E700DAF45C /* EntityTest.m */,
-				DF91D9271730A0A200E1AD1E /* EntityTest1.h */,
-				DF91D9281730A0A200E1AD1E /* EntityTest1.m */,
+				DF331F32173309C400AC4513 /* EntityTest1.h */,
+				DF331F33173309C400AC4513 /* EntityTest1.m */,
 				DF91D9291730A0A200E1AD1E /* EntityTest2.h */,
 				DF91D92A1730A0A200E1AD1E /* EntityTest2.m */,
 				DF91D92B1730A0A200E1AD1E /* EntityTest3.h */,
 				DF91D92C1730A0A200E1AD1E /* EntityTest3.m */,
 				DF91D92D1730A0A200E1AD1E /* EntityTest4.h */,
 				DF91D92E1730A0A200E1AD1E /* EntityTest4.m */,
+				DF91D9271730A0A200E1AD1E /* EntityTest5.h */,
+				DF91D9281730A0A200E1AD1E /* EntityTest5.m */,
 				DF91D92F1730A0A200E1AD1E /* FWFExamples.h */,
 				DF91D9301730A0A200E1AD1E /* FWFExamples.m */,
 			);
@@ -386,7 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DF91D92517309F7500E1AD1E /* main.m in Sources */,
-				DF91D9311730A0A200E1AD1E /* EntityTest1.m in Sources */,
+				DF91D9311730A0A200E1AD1E /* EntityTest5.m in Sources */,
 				DF91D9321730A0A200E1AD1E /* EntityTest2.m in Sources */,
 				DF91D9331730A0A200E1AD1E /* EntityTest3.m in Sources */,
 				DF91D9341730A0A200E1AD1E /* EntityTest4.m in Sources */,
@@ -422,6 +427,7 @@
 				DF91D9A21730A12700E1AD1E /* OBJInteger.m in Sources */,
 				DF91D9A31730A12700E1AD1E /* OBJUInteger.m in Sources */,
 				DF354017173165E700DAF45C /* EntityTest.m in Sources */,
+				DF331F34173309C400AC4513 /* EntityTest1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

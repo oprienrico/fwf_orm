@@ -6,6 +6,7 @@
 //
 
 #import "FWFForeignKey.h"
+#import "FWF_Costants.h"
 @class FWFEntity;
 
 
@@ -23,5 +24,10 @@
 - (void) setObjectWithPkNumber:(NSNumber *) pk;
 - (void) setObjectWithPkOBJInteger:(OBJUInteger *) pk;
 
-- (void) noObject;
+- (void) setNoObject;
+
+//it is called by the initPersistence method to define the Action for this Foreign Key.
+//call <setActionOnDelete> inside the method <initForeignKeys> (if called somewhere else, the value set will be ignored)
+- (NSString *) actionOnDelete;
+- (void) setActionOnDelete:(FWF_FK_ACTION) action;
 @end

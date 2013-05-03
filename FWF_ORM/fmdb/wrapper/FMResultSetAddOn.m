@@ -1,5 +1,4 @@
 //
-//  FWF
 //  FMDB extensions
 //
 //  Created by Enrico Opri.

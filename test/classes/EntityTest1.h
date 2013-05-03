@@ -1,33 +1,24 @@
 //
-//  FWF
-//  test Class
+//  EntityTest1.h
+//  FWF_ORM
 //
-//  Created by Enrico Opri
-//  Copyright (c) 2013 Enrico Opri. All rights reserved.
+//  Created by black-gray on 02/05/13.
+//  Copyright (c) 2013 hjgauss. All rights reserved.
 //
 
 #import "FWF_ORM.h"
 
 @interface EntityTest1 : FWFEntity{
     NSString *name;
-    NSDate *date;
     NSNumber *number;
-    OBJInteger *integer;
-    OBJBool *objbool;
-    
-    NSArray *list;//generic data
-    
+
     FWFForeignKey_XToOne *foreignKey1;
-    
+    FWFForeignKey_XToOne *foreignKey2;
 }
 
 @property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSDate *date;
 @property (nonatomic, strong) NSNumber *number;
-@property (nonatomic, strong) OBJInteger *integer;
-@property (nonatomic, strong) OBJBool *objbool;
-@property (nonatomic, strong) NSArray *list;
 
 @property (nonatomic, strong) FWFForeignKey_XToOne *foreignKey1;
-
+@property (nonatomic, strong) FWFForeignKey_XToOne *foreignKey2;
 @end
