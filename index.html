@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>FireWood Fridge ORM by hjgauss</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>FireWood Fridge ORM</h1>
+          <h2>FireWood Fridge ORM, an ORM for Objective-C (iOS and Mac OSX) on top of SQLite</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/hjgauss/fwf_orm/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/hjgauss/fwf_orm/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/hjgauss/fwf_orm" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>FireWood Fridge ORM</h1>
+
+<p>an ORM for Objective-C (both <strong>iOS</strong> and <strong>Mac OSX</strong>) on top of SQLite</p>
+
+<h2>Intro</h2>
+
+<p>Modeled after Active Records pattern. It supports relations (many-to-one, one-to-one, one-to-many, many-to-many).</p>
+
+<p>It can be deployed both on <strong>iOS</strong> and <strong>Mac OSX</strong></p>
+
+<p>It's based upon FMDB available at <a href="https://github.com/ccgus/fmdb/">https://github.com/ccgus/fmdb/</a>, an Objective-C wrapper around SQLite: <a href="http://sqlite.org/">http://sqlite.org/</a></p>
+
+<h2>How to use</h2>
+
+<h3>Quickstart</h3>
+
+<p>Import into the XCode Project the <code>FWF_ORM</code> folder, <strong>enable ARC</strong> and add libsqlite3.dylib (in YourProject-&gt;BuildPhases-&gt;Link Binary With Libraries)</p>
+
+<h4>An Example</h4>
+
+<p>Define a class that inherits from <code>FWFEntity</code>, that will be our entity.
+In the example we will name it <code>EntityTest</code> (wow a name that's unexpected…) with an <code>NSString</code> attribute <code>name</code>.</p>
+
+<p><strong><em>NB:Attributes must be Objects! (see <a href="#new-obj-datatypes"><code>newOBJDataTypes</code> section</a>)</em></strong></p>
+
+<p>Remember that you will need to init the persistence f your entities at startup (or before every call)
+you could not do so and use everytime</p>
+
+<pre><code>[[EntityTest alloc] initWithPersistenceCheck];
+</code></pre>
+
+<p>but it's faster to init persistence at startup</p>
+
+<pre><code>[[EntityTest alloc] initEntityPersistence];
+</code></pre>
+
+<p>and somewhere else you can use the entity withou any worries</p>
+
+<pre><code>EntityTest *jack = [[EntityTest alloc] init];
+jack.name = @"Jack White"
+</code></pre>
+
+<p>to save call </p>
+
+<pre><code>[jack save];
+</code></pre>
+
+<p>simple huh?</p>
+
+<p>To retrieve the object saved:</p>
+
+<pre><code>EntityTest *retrievedobj = [[EntityTest objects] getFirstOrNilWithSQLPredicate:@"name='Jack White'"];
+</code></pre>
+
+<p>Or a collection of objects:</p>
+
+<p>the entire collection</p>
+
+<pre><code>FWFList *listobjs = [[EntityTest objects] all];
+</code></pre>
+
+<p>a part of it (using filters)</p>
+
+<pre><code>FWFList *listobjs = [[EntityTest objects] filterWithSQLPredicate:@"name like '%Whi%'"];
+</code></pre>
+
+<h3>FILTERS</h3>
+
+<h4>SQL based filters</h4>
+
+<p>You can use filter based on SQL (everything is appended after the keyword <code>WHERE</code>)</p>
+
+<pre><code>FWFList *listobjs = [[EntityTest objects] filterWithSQLPredicate:@"name = 'Jack White'"];
+</code></pre>
+
+<p>and chain them together</p>
+
+<pre><code>FWFList *listobjs = [[[EntityTest objects] filterWithSQLPredicate:@"name like '%Ja%'"] filterWithSQLPredicate:@"name like '%White%'"];
+</code></pre>
+
+<p>or better (because each call to the filter method executes a query and retrieve the objects, so it consumes resources)</p>
+
+<pre><code>FWFList *listobjs = [EntityTest objects];
+[listobjs beginSQLChainedFiltering];
+#add filters
+[[listobjs filterWithSQLPredicate:@"name like '%Ja%'"] filterWithSQLPredicate:@"name like '%White%'"];
+#and now execute each filter called
+[listobjs executeSQLChainedFiltering];
+</code></pre>
+
+<h4>Tip:</h4>
+
+<p>This code</p>
+
+<pre><code>FWFList *listobjs = [[[EntityTest objects] filterWithSQLPredicate:@"name like '%Ja%'"] filterWithSQLPredicate:@"name like '%White%'"];
+</code></pre>
+
+<p>or this one</p>
+
+<pre><code>FWFList *listobjs = [EntityTest objects];
+[listobjs filterWithSQLPredicate:@"name like '%Ja%'"]
+[listobjs filterWithSQLPredicate:@"name like '%White%'"];
+</code></pre>
+
+<p>Does the same thing</p>
+
+<h4>NSPredicate based filters</h4>
+
+<p>You can use <code>NSPredicate</code> based filters (<a href="https://developer.apple.com/library/mac/#documentation/Cocoa/Conceptual/Predicates/predicates.html#//apple_ref/doc/uid/TP40001789">sintax help</a>)</p>
+
+<pre><code>FWFList *listobjs = [EntityTest objects];
+[listobjs filterWithPredicate:@"number=11"];
+[listobjs filterWithPredicate:@"name like 'Mar*'"];
+</code></pre>
+
+<p>You can chain them togheter but they are executed every time they are called (each filter is executed when called).</p>
+
+<h4>Tip:</h4>
+
+<p>If you use the filters based on NSPredicate you can't chain after them a SQL based filter (it will overwrite the filtering made by every NSPredicate based filter).</p>
+
+<h3>SERIALIZE</h3>
+
+<p>There are also serialization methods available that returns <code>NSDictionary</code> or <code>NSArray</code> of <code>NSDictionary</code></p>
+
+<pre><code>#for single entities:
+[retrievedobj serializeWithDictionary];
+
+#for collections:
+[listobjs serializeWithDictionary];
+</code></pre>
+
+<h4>Others Examples</h4>
+
+<p>You can try the examples included in the test folder. That folder does not contain dependancies for the FWF ORM.</p>
+
+<h2>Configurations</h2>
+
+<h3>General</h3>
+
+<p>The FWF general configurations are stored into <code>FWF_Config.h</code></p>
+
+<ul>
+<li>  FWF_LAZY_ERRORS FALSE: default is FALSE, and it throw s an exception when incurring in a persistence problem. If TRUE it's more "lazy" (less strict) about that.</li>
+<li>  FWF_DEBUG: default is FALSE, if true the query executed by the FWF ORM are logged</li>
+</ul><h3>Specific</h3>
+
+<p>FWFEntity could allow the storage of empty entities (every attribute is null except for the <code>pk</code>). 
+DEFAULT is FALSE
+If you want to allow empty entities, override the method <code>isNullEntityNotAllowed</code>, returning false</p>
+
+<pre><code>- (bool) isNullEntityNotAllowed{
+    return false;
+SEp}
+</code></pre>
+
+<h2>Tips</h2>
+
+<p>The filters based on SQL are clauses that will be appended in the query after the keyword <code>WHERE</code>.</p>
+
+<p>You can chain SQL filters, but remember each filter is executed every times it is invoked.
+To avoid that, before executing the chained filters, call <code>beginSQLChainedFiltering</code>, and after the last filter (to retrieve the desidered data) call <code>executeSQLChainedFiltering</code>.
+If you use the filters based on NSPredicate you can't chain after them a SQL based filter (it will overwrite the filtering made by every NSPredicate based filter).</p>
+
+<p>It's better to use SQL based filters because they are faster (expecially with lot of data)</p>
+
+<hr><h2>New OBJ DataTypes</h2>
+
+<p>They are available the "object equivalent" of some primitive types:</p>
+
+<ul>
+<li>OBJBool</li>
+<li>OBJInteger</li>
+<li>OBJUInteger</li>
+</ul><p>Use them safely as attributes of entities.</p>
+
+<p><a href="http://githalytics.com/hjgauss/fwf_orm"><img src="https://cruel-carlota.pagodabox.com/e50a04cf21007790f1c575db22758d6e" alt="githalytics.com alpha" title="githalytics.com"></a></p>
+        </section>
+
+        <footer>
+          FireWood Fridge ORM is maintained by <a href="https://github.com/hjgauss">hjgauss</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="http://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+                  <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-40604034-2");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+      </div>
+    </div>
+  </body>
+</html>
