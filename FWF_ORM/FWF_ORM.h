@@ -27,5 +27,6 @@
 @interface FWF : NSObject
 
 + (void) resetStorage;
++ (void) shrinkDownStorage;
 
 @end

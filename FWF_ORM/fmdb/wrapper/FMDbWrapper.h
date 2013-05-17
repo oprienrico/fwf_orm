@@ -6,7 +6,7 @@
 //
 
 //if YES initialize foreign Keys Sqlite Modules
-#define FOREIGN_KEY YES
+#define FMDB_FOREIGN_KEY TRUE
 
 #import "FMDatabase.h"
 #import "FMDatabaseAdditions.h"
@@ -17,9 +17,7 @@
 
 @interface FMDbWrapper : FMDatabase
 
-
 + (NSString *) getStandardDbPath;
-+ (void) resetDatabase;
 
 - (id)initDatabase;
 - (id)initDatabaseWithForeignKeys;
@@ -30,8 +28,18 @@
 - (id)initDatabaseFromTemplateWithReset:(BOOL) reset;
 - (id)initDatabaseFromTemplateFile:(NSString *) fileTemplate reset:(BOOL)reset;
 
-- (NSArray *)getArrayFromExecutingSQL:(NSString *)sql;
-- (NSArray *)getArrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes;
+//it deletes and recreates the database (so when you will init the db the .sqlite file will already be there
++ (bool) resetDatabase;
++ (void) deleteDatabase;
+- (void) vacuum;
+- (int) page_count;
+- (int) freelist_count;
+
+- (void) setupDatabaseDefaults;
+- (void) activateForeignKeys;
+
+- (NSArray *)arrayFromExecutingSQL:(NSString *)sql;
+- (NSArray *)arrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes;
 
 + (NSString *) sqlTypeFromObjCObject:(NSObject *) obj;
 + (NSString *) mysqlTypeFromObjCObject:(NSObject *) obj;

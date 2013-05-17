@@ -252,4 +252,52 @@
     
     NSLog(@"select only referenced entities by the foreign key specified \n%@",[[[sofa.onetomanyfk objectsReferencedWithAttribute:@"foreignKey1"] all] serializeWithDictionary]);
 }
+
++(void) testBenchmark{
+    NSTimeInterval duration = 0;
+    int ntimes=3;
+    
+    [[EntityTest alloc] initEntityPersistence];
+    [[EntityTest1 alloc] initEntityPersistence];
+    [[EntityTest2 alloc] initEntityPersistence];
+    
+    EntityTest *single = nil;
+    for (int i=0; i<ntimes; i++){
+        NSTimeInterval start = [NSDate timeIntervalSinceReferenceDate];
+        //fill the db with some objects
+        for (int j=0; j<1000; j++){
+            single = [[EntityTest alloc] init];
+            single.name = @"testname";
+            single.number = [NSNumber numberWithInt:j];
+            [single save];
+        }
+        
+        //delete all
+        [[[EntityTest objects] all] deleteFromStorage];
+        //filterWithSQLPredicate:@"name='my sofa'"] serializeWithDictionary];
+        duration+=[NSDate timeIntervalSinceReferenceDate]-start;
+    }
+    NSLog(@"time %lf", duration/ntimes);
+    FMDbWrapper *db = [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
+    NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
+    [db close];
+    
+    NSTimeInterval start = [NSDate timeIntervalSinceReferenceDate];
+    [FWF shrinkDownStorage];
+    duration+=[NSDate timeIntervalSinceReferenceDate]-start;
+    NSLog(@"cleaning time %lf", duration);
+    
+    EntityTest1 *single2 = nil;
+    for (int j=0; j<1000; j++){
+        single2 = [[EntityTest1 alloc] init];
+        single2.name = @"testname";
+        single2.number = [NSNumber numberWithInt:j];
+        [single2 save];
+    }
+    
+    db = [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
+    NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
+    NSLog(@"autovacuum: %d", [db intForQuery:@"PRAGMA auto_vacuum"]);
+    [db close];
+}
 @end

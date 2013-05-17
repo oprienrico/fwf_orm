@@ -74,27 +74,21 @@
 }
 
 - (id)initDatabase{
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
-    
     //try to init db
-    self = [FMDbWrapper databaseWithPath:db_path];
+    self = [FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
     if (![self open]){
         NSLog(@"Failed to open database!");
         return nil;
     }else {
-        #ifdef FOREIGN_KEY
-            if (FOREIGN_KEY) {
+        #ifdef FMDB_FOREIGN_KEY
+            #if FMDB_FOREIGN_KEY == TRUE
                 [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
-            }else{
+            #else
                 [self executeUpdate:@"PRAGMA foreign_keys=OFF;"];
-            }
+            #endif
+        #else
+            [self executeUpdate:@"PRAGMA foreign_keys=OFF;"];
         #endif
-        // Default to UTF-8 encoding
-        [self executeUpdate:@"PRAGMA encoding = \"UTF-8\""];
-        
-        // Turn on full auto-vacuuming to keep the size of the database down
-        // This setting can be changed per database using the setAutoVacuum instance method
-        [self executeUpdate:@"PRAGMA auto_vacuum=1"];
     }
     
     return self;
@@ -105,18 +99,11 @@
     
     //try to init db
     self = [FMDbWrapper databaseWithPath:db_path];
-    if (![self open]){
+    if ([self open]){
+        [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
+    }else {
         NSLog(@"Failed to open database!");
         return nil;
-    }else {
-        [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
-        
-        // Default to UTF-8 encoding
-        //[self executeUpdate:@"PRAGMA encoding = \"UTF-8\""];
-        
-        // Turn on full auto-vacuuming to keep the size of the database down
-        // This setting can be changed per database using the setAutoVacuum instance method
-        //[self executeUpdate:@"PRAGMA auto_vacuum=1"];
     }
     
     return self;
@@ -127,36 +114,52 @@
     
     //try to init db
     self = [FMDbWrapper databaseWithPath:db_path];
-    if (![self open]){
+    if ([self open]){
+        [self executeUpdate:@"PRAGMA foreign_keys=OFF;"];
+    }else {
         NSLog(@"Failed to open database!");
         return nil;
-    }else {
-        [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
-        
-        // Default to UTF-8 encoding
-        [self executeUpdate:@"PRAGMA encoding = \"UTF-8\""];
-        
-        // Turn on full auto-vacuuming to keep the size of the database down
-        // This setting can be changed per database using the setAutoVacuum instance method
-        [self executeUpdate:@"PRAGMA auto_vacuum=1"];
     }
     
     return self;
 }
 
+- (void) setupDatabasesDefaults{
+    // Default to UTF-8 encoding
+    [self executeUpdate:@"PRAGMA encoding = \"UTF-8\""];
+    
+    //auto-vacuuming set to full keeps the size of the db down, but it leads to fragmentation
+    [self executeUpdate:@"PRAGMA auto_vacuum=1"];
+}
 
 - (void) activateForeignKeys{
     [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
 }
 
-+ (void) resetDatabase{
++ (bool) resetDatabase{
+    NSString *db_path = [FMDbWrapper getStandardDbPath];
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    [fileManager removeItemAtPath:db_path error:nil];
+    //init a db
+    FMDbWrapper *db = [FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
+    
+    if ([db open]){
+        //[db executeUpdate:@"PRAGMA auto_vacuum=1"];
+        [db close];
+        return true;
+    }else{
+        NSLog(@"Failed to open database!");
+        return false;
+    }
+}
+
++ (void) deleteDatabase{
     NSString *db_path = [FMDbWrapper getStandardDbPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager removeItemAtPath:db_path error:nil];
 }
 
-- (id)initDatabaseWithReset:(BOOL)reset
-{
+- (id)initDatabaseWithReset:(BOOL)reset{
     if (reset) {
         [[self class] resetDatabase];
     }
@@ -170,13 +173,10 @@
 
 //  inizializza database da template specificandone nome
 - (id)initDatabaseFromTemplateFile:(NSString *) fileTemplate reset:(BOOL)reset{
-    
-  
-    NSFileManager *fm = [NSFileManager defaultManager];
-    
+
+    NSFileManager *fm = [NSFileManager defaultManager];    
     NSString *db_path = [FMDbWrapper getStandardDbPath];
     NSString *template_path =  [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileTemplate];
-
     
     //se il template non esiste ritorna nil
     if (![fm fileExistsAtPath:template_path]) {
@@ -200,16 +200,12 @@
     
 }
 
-- (NSArray *)getArrayFromExecutingSQL:(NSString *)sql{
-    FMResultSet *result = [self executeQuery:sql];
-    
-    return [result getResultArrayOfDictio];
+- (NSArray *)arrayFromExecutingSQL:(NSString *)sql{
+    return [[self executeQuery:sql] getResultArrayOfDictio];
 }
 
-- (NSArray *)getArrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes{
-    FMResultSet *result = [self executeQuery:sql];
-    
-    return [result getResultArrayOfDictioWithOverridedTypes:overridedTypes];
+- (NSArray *)arrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes{
+    return [[self executeQuery:sql] getResultArrayOfDictioWithOverridedTypes:overridedTypes];
 }
 
 
@@ -300,6 +296,18 @@
 //utils
 + (NSString *) stringQuote:(NSString *) string{
     return [NSString stringWithFormat:@"'%@'", string];
+}
+
+- (void) vacuum{
+    [self executeUpdate:@"VACUUM;"];
+}
+
+- (int) page_count{
+    return [self intForQuery:@"PRAGMA page_count;"];
+}
+
+- (int) freelist_count{
+    return [self intForQuery:@"PRAGMA freelist_count;"];
 }
 
 @end

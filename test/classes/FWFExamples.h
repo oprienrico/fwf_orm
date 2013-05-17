@@ -17,5 +17,6 @@
 + (void) testChainedNSPredicateFiltering;
 + (void) testRelations1;
 + (void) testRelations2;
++ (void) testBenchmark;
 
 @end

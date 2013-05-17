@@ -13,4 +13,12 @@
     [FMDbWrapper resetDatabase];
 }
 
++ (void) shrinkDownStorage{
+    FMDbWrapper *db = [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
+    //[FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
+    //NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
+    [db vacuum];
+    //NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
+}
+
 @end

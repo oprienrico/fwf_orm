@@ -25,6 +25,7 @@ int main(int argc, const char * argv[])
         //[FWFExamples testChainedNSPredicateFiltering];
         //[FWFExamples testRelations1];
         //[FWFExamples testRelations2];
+        //[FWFExamples testBenchmark];
         
         NSLog(@"This is the end, my friend!");
     }
