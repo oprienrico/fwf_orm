@@ -44,7 +44,7 @@
 - (FWFList *) objects{
     id item = [[[self referencedEntityClass] alloc] init];//initialize object and foreign keys referenced class
     
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:[self referencedEntityClass]];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:[self referencedEntityClass]];
     NSDictionary *attributesValues = [item getValuesDictionary];
     
     __block NSMutableArray *conditionSelQuery = [[NSMutableArray alloc] init];
@@ -72,7 +72,7 @@
 - (FWFList *) objectsReferencedWithAttribute:(NSString *) fkName{
     id item = [[[self referencedEntityClass] alloc] init];//initialize object and foreign keys referenced class
     
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:[self referencedEntityClass]];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:[self referencedEntityClass]];
     NSDictionary *attributesValues = [item getValuesDictionary];
     
     __block bool fk_found = false;
@@ -104,7 +104,7 @@
 - (FWFList *) objectsReferencedWithAttributes:(NSArray *) fkNameList{
     id item = [[[self referencedEntityClass] alloc] init];//initialize object and foreign keys referenced class
     
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:[self referencedEntityClass]];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:[self referencedEntityClass]];
     NSDictionary *attributesValues = [item getValuesDictionary];
     
     __block NSMutableArray *conditionSelQuery = [[NSMutableArray alloc] init];

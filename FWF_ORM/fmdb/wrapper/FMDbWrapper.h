@@ -17,7 +17,7 @@
 
 @interface FMDbWrapper : FMDatabase
 
-+ (NSString *) getStandardDbPath;
++ (NSString *) standardDbPath;
 
 - (id) initDatabase;
 - (id) initDatabaseWithForeignKeys;
@@ -43,8 +43,8 @@
 - (void) setupDatabaseDefaults;
 - (void) activateForeignKeys;
 
-- (NSArray *)arrayFromExecutingSQL:(NSString *)sql;
-- (NSArray *)arrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes;
+- (NSArray *)arrayByExecutingSQL:(NSString *)sql;
+- (NSArray *)arrayByExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes;
 
 + (NSString *) sqlTypeFromObjCObject:(NSObject *) obj;
 + (NSString *) mysqlTypeFromObjCObject:(NSObject *) obj;

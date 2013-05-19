@@ -11,9 +11,9 @@
 
 @interface ClassUtility : NSObject
 
-+ (NSDictionary *)getAttributesTypeFromClass:(Class)klass;
-+ (NSDictionary *)getAttributesTypeFromObject:(NSObject *) obj;
-+ (NSString *) getClassNameFromObject:(id) obj;
-+ (NSString *) getClassNameFromObject:(Class) objectClass WithAttributeName:(NSString *) attributeName;
++ (NSDictionary *)attributesTypeFromClass:(Class)klass;
++ (NSDictionary *)attributesTypeFromObject:(NSObject *) obj;
++ (NSString *) classNameFromObject:(id) obj;
++ (NSString *) classNameFromObject:(Class) objectClass WithAttributeName:(NSString *) attributeName;
 
 @end

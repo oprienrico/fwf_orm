@@ -50,7 +50,7 @@
 + (id) setItemFromFMDBDictio:(NSDictionary *) dictio withClass:(Class) cl{
     id item = [[cl alloc] init];//initialize object and foreign keys referenced class
     
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:cl];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:cl];
     
     //setting pk
     [item setValue:[OBJUInteger objectWithFMDBCompatibleType:[dictio objectForKey:@"pk"]] forKey:@"pkOBJ"];

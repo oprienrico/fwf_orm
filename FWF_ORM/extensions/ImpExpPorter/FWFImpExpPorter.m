@@ -43,7 +43,7 @@
     NSMutableDictionary *compatibleValuesDictio = [[NSMutableDictionary alloc] init];
     
     valuesDictio = [FWF_Utils filterAttributesMutable:valuesDictio];//filter allowed values
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:[self class]];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:[self class]];
     
     //prepare query string
     NSMutableString *sql1=[[NSMutableString alloc] initWithFormat:@"INSERT INTO %@ (",[self entityName]];
@@ -115,7 +115,7 @@
 + (id) setItemFromCoder:(NSCoder *) decoder withClass:(Class) cl{
     id item = [[cl alloc] init];//initialize object and foreign keys referenced class
     
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:cl];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:cl];
     
     //setting pk
     [item setValue:[decoder decodeObjectForKey:@"pk"] forKey:@"pkOBJ"];
@@ -271,7 +271,7 @@
         if(![fm removeItemAtPath:to_path error:nil])
             return false;
         
-    if(![fm copyItemAtPath:[FMDbWrapper getStandardDbPath] toPath:to_path error:nil])
+    if(![fm copyItemAtPath:[FMDbWrapper standardDbPath] toPath:to_path error:nil])
         return false;
     else{
         NSLog(@"exported file to:\n%@",to_path);

@@ -41,7 +41,7 @@ static const char * getPropertyType(objc_property_t property) {
 }
 
 
-+ (NSDictionary *)getAttributesTypeFromClass:(Class)klass{
++ (NSDictionary *)attributesTypeFromClass:(Class)klass{
     if (klass == NULL) {
         return nil;
     }
@@ -66,16 +66,16 @@ static const char * getPropertyType(objc_property_t property) {
     return [NSDictionary dictionaryWithDictionary:results];
 }
 
-+ (NSDictionary *)getAttributesTypeFromObject:(id) obj{
-    return [self getAttributesTypeFromClass:[obj class]];
++ (NSDictionary *)attributesTypeFromObject:(id) obj{
+    return [self attributesTypeFromClass:[obj class]];
 }
 
-+ (NSString *) getClassNameFromObject:(NSObject *)obj{
++ (NSString *) classNameFromObject:(NSObject *)obj{
     const char* className = class_getName([obj class]);
     return [NSString stringWithUTF8String:className];
 }
 
-+ (NSString *) getClassNameFromObject:(Class) objectClass WithAttributeName:(NSString *) attributeName{
++ (NSString *) classNameFromObject:(Class) objectClass WithAttributeName:(NSString *) attributeName{
     objc_property_t theProperty = class_getProperty(objectClass, [attributeName UTF8String]);
     const char * propertyAttrs = getPropertyType(theProperty);
     return [NSString stringWithUTF8String:propertyAttrs];

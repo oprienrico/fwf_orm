@@ -144,7 +144,7 @@
     
     FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
     
-    tempList = [db arrayFromExecutingSQL:sql];
+    tempList = [db arrayByExecutingSQL:sql];
     
     NSMutableArray *tempEntityList = [[NSMutableArray alloc] init];
     

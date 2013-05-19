@@ -30,7 +30,7 @@
     [database executeUpdate:@"INSERT INTO persona (id,name) VALUES (NULL,'enrico');INSERT INTO persona (id,name) VALUES (2,'luca');"];
  
     //a quick method to obtain an Array of Dictio
-    [database getArrayFromExecutingSQL:@"select * from persona"];
+    [database getarrayByExecutingSQL:@"select * from persona"];
  
     //usual method
     FMResultSet *results = [database executeQuery:@"select * from user"];
@@ -45,7 +45,7 @@
 
 */
 
-+ (NSString *) getStandardDbPath{
++ (NSString *) standardDbPath{
 #if TARGET_OS_IPHONE
     // iOS
     NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -75,7 +75,7 @@
 
 - (id) initDatabase{
     //try to init db
-    self = [FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
+    self = [FMDbWrapper databaseWithPath:[FMDbWrapper standardDbPath]];
     if (![self open]){
         NSLog(@"Failed to open database!");
         return nil;
@@ -95,7 +95,7 @@
 }
 
 - (id) initDatabaseWithForeignKeys{
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
+    NSString *db_path = [FMDbWrapper standardDbPath];
     
     //try to init db
     self = [FMDbWrapper databaseWithPath:db_path];
@@ -110,7 +110,7 @@
 }
 
 - (id) initDatabaseWithoutForeignKeys{
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
+    NSString *db_path = [FMDbWrapper standardDbPath];
     
     //try to init db
     self = [FMDbWrapper databaseWithPath:db_path];
@@ -137,16 +137,16 @@
 }
 
 + (bool) databaseExist{
-    return [[NSFileManager defaultManager] fileExistsAtPath:[FMDbWrapper getStandardDbPath]];
+    return [[NSFileManager defaultManager] fileExistsAtPath:[FMDbWrapper standardDbPath]];
 }
 
 + (bool) resetDatabase{
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
+    NSString *db_path = [FMDbWrapper standardDbPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager removeItemAtPath:db_path error:nil])
         return false;
     //init a db
-    FMDbWrapper *db = [FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
+    FMDbWrapper *db = [FMDbWrapper databaseWithPath:[FMDbWrapper standardDbPath]];
     
     if ([db open]){
         //[db executeUpdate:@"PRAGMA auto_vacuum=1"];
@@ -159,7 +159,7 @@
 }
 
 + (void) deleteDatabase{
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
+    NSString *db_path = [FMDbWrapper standardDbPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager removeItemAtPath:db_path error:nil];
 }
@@ -193,7 +193,7 @@
 
 + (bool) createDatabaseWithTemplateDbFromPath:(NSString *) template_path byOverwriting:(bool)isToOverwrite{
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
+    NSString *db_path = [FMDbWrapper standardDbPath];
     
     //fix path search (if it doesn't start from radix, make path relative to current app bundle position)
     if ([template_path characterAtIndex:0]!='/')
@@ -219,11 +219,11 @@
 }
 
 
-- (NSArray *) arrayFromExecutingSQL:(NSString *)sql{
+- (NSArray *) arrayByExecutingSQL:(NSString *)sql{
     return [[self executeQuery:sql] listAllResultsAsArrayOfDictio];
 }
 
-- (NSArray *) arrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes{
+- (NSArray *) arrayByExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes{
     return [[self executeQuery:sql] listAllResultsAsArrayOfDictioWithOverridedTypes:overridedTypes];
 }
 

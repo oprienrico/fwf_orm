@@ -47,7 +47,7 @@
     //check if foreign keys are initialized correctly, if not throw custom exception
     __block bool wasInitFKNotCalled = YES;
     __block bool fkmanymanyfound = false;
-    NSDictionary *attributes = [ClassUtility getAttributesTypeFromClass:[self class]];
+    NSDictionary *attributes = [ClassUtility attributesTypeFromClass:[self class]];
     
     [attributes enumerateKeysAndObjectsUsingBlock:^(id attrName, id attrClassName, BOOL *stop) {
         Class attrClass = [NSClassFromString(attrClassName) class];
@@ -76,7 +76,7 @@
                 //need to verify that there is at least one linked XTOOne attibute
                 id item = [[[value referencedEntityClass] alloc] init];//initialize object and foreign keys referenced class
                 
-                NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:[value referencedEntityClass]];
+                NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:[value referencedEntityClass]];
                 NSDictionary *attributesValues = [item getValuesDictionary];
                 
                 __block BOOL notFound = true;
@@ -129,7 +129,7 @@
         __block NSString *fksql_vars = [[NSString alloc] init];
         __block NSString *fksql_constr = [[NSString alloc] init];
 
-        NSDictionary *attributes = [ClassUtility getAttributesTypeFromClass:[self class]];
+        NSDictionary *attributes = [ClassUtility attributesTypeFromClass:[self class]];
         [attributes enumerateKeysAndObjectsUsingBlock:^(id attrName, id obj, BOOL *stop) {
             Class attrClass = [NSClassFromString(obj) class];
 
@@ -189,7 +189,7 @@
     NSMutableDictionary *compatibleValuesDictio = [[NSMutableDictionary alloc] init];
     
     valuesDictio = [FWF_Utils filterAttributesMutable:valuesDictio];//filter allowed values
-    NSDictionary *attributesType = [ClassUtility getAttributesTypeFromClass:[self class]];
+    NSDictionary *attributesType = [ClassUtility attributesTypeFromClass:[self class]];
     
     if([_pkOBJ unsignedIntegerValue]>0){
         //if pk > 0 it means its an object retrieved from db
@@ -308,7 +308,7 @@
 
 - (NSDictionary *) getValuesDictionary{
     //obtain value from object attributes
-    return [self dictionaryWithValuesForKeys:[[ClassUtility getAttributesTypeFromClass:[self class]] allKeys]];
+    return [self dictionaryWithValuesForKeys:[[ClassUtility attributesTypeFromClass:[self class]] allKeys]];
 }
 
 - (NSDictionary *) serializeWithDictionary{
