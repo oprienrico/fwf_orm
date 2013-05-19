@@ -15,14 +15,14 @@
 
 @class FWFList;
 
-@protocol FWFRELATIONSHIPupport
+@protocol FWFRELATIONSHIPSupport
 
 @optional
 - (void) initForeignKeys;
 
 @end
 
-@interface FWFEntity : NSObject <FWFRELATIONSHIPupport> {
+@interface FWFEntity : NSObject <FWFRELATIONSHIPSupport> {
     BOOL __deleted;
 }
 
@@ -39,8 +39,8 @@
 //init persistence only (does not return an object). Advice: call this method at startup, before any other call to the objects
 -(void) initEntityPersistence;
 
-- (NSString *) getEntityName;
-+ (NSString *) getEntityName;
+- (NSString *) entityName;
++ (NSString *) entityName;
 
 - (NSUInteger) pk;
 - (OBJUInteger *) pkOBJ;

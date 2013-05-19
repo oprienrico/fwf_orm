@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		DF331F34173309C400AC4513 /* EntityTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = DF331F33173309C400AC4513 /* EntityTest1.m */; };
 		DF354017173165E700DAF45C /* EntityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF354016173165E700DAF45C /* EntityTest.m */; };
+		DF547ECA174917BF00320450 /* FWFImpExpPorter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF547EC9174917BF00320450 /* FWFImpExpPorter.m */; };
 		DF91D91417309EC400E1AD1E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF91D91317309EC400E1AD1E /* Foundation.framework */; };
 		DF91D92517309F7500E1AD1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D92417309F7500E1AD1E /* main.m */; };
 		DF91D9311730A0A200E1AD1E /* EntityTest5.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9281730A0A200E1AD1E /* EntityTest5.m */; };
@@ -66,6 +67,8 @@
 		DF331F33173309C400AC4513 /* EntityTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest1.m; sourceTree = "<group>"; };
 		DF354015173165E700DAF45C /* EntityTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest.h; sourceTree = "<group>"; };
 		DF354016173165E700DAF45C /* EntityTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest.m; sourceTree = "<group>"; };
+		DF547EC8174917BF00320450 /* FWFImpExpPorter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFImpExpPorter.h; sourceTree = "<group>"; };
+		DF547EC9174917BF00320450 /* FWFImpExpPorter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFImpExpPorter.m; sourceTree = "<group>"; };
 		DF91D91017309EC400E1AD1E /* FWF_ORM */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FWF_ORM; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF91D91317309EC400E1AD1E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF91D92217309F7500E1AD1E /* FWF_ORM-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FWF_ORM-Prefix.pch"; sourceTree = "<group>"; };
@@ -161,6 +164,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		DF547EC6174917BE00320450 /* extensions */ = {
+			isa = PBXGroup;
+			children = (
+				DF547EC7174917BF00320450 /* ImpExpPorter */,
+			);
+			path = extensions;
+			sourceTree = "<group>";
+		};
+		DF547EC7174917BF00320450 /* ImpExpPorter */ = {
+			isa = PBXGroup;
+			children = (
+				DF547EC8174917BF00320450 /* FWFImpExpPorter.h */,
+				DF547EC9174917BF00320450 /* FWFImpExpPorter.m */,
+			);
+			path = ImpExpPorter;
+			sourceTree = "<group>";
+		};
 		DF91D90717309EC400E1AD1E = {
 			isa = PBXGroup;
 			children = (
@@ -225,14 +245,17 @@
 			children = (
 				DF91D9371730A12700E1AD1E /* commonClassExtension */,
 				DF91D9511730A12700E1AD1E /* fmdb */,
-				DF91D9621730A12700E1AD1E /* FWF_Config.h */,
-				DF91D9631730A12700E1AD1E /* FWF_Costants.h */,
+				DF547EC6174917BE00320450 /* extensions */,
 				DF91D9641730A12700E1AD1E /* FWF_ORM.h */,
+				DF91D9631730A12700E1AD1E /* FWF_Costants.h */,
+				DF91D9621730A12700E1AD1E /* FWF_Config.h */,
 				DF91D9651730A12700E1AD1E /* FWF_ORM.m */,
 				DF91D9661730A12700E1AD1E /* FWF_Utils.h */,
 				DF91D9671730A12700E1AD1E /* FWF_Utils.m */,
 				DF91D9681730A12700E1AD1E /* FWFEntity.h */,
 				DF91D9691730A12700E1AD1E /* FWFEntity.m */,
+				DF91D9721730A12700E1AD1E /* FWFList.h */,
+				DF91D9731730A12700E1AD1E /* FWFList.m */,
 				DF91D96A1730A12700E1AD1E /* FWFRelationship.h */,
 				DF91D96B1730A12700E1AD1E /* FWFRelationship.m */,
 				DF91D96C1730A12700E1AD1E /* FWFRelationship_ManyToMany.h */,
@@ -241,8 +264,6 @@
 				DF91D96F1730A12700E1AD1E /* FWFRelationship_OneToMany.m */,
 				DF91D9701730A12700E1AD1E /* FWFRelationship_XToOne.h */,
 				DF91D9711730A12700E1AD1E /* FWFRelationship_XToOne.m */,
-				DF91D9721730A12700E1AD1E /* FWFList.h */,
-				DF91D9731730A12700E1AD1E /* FWFList.m */,
 				DF91D9741730A12700E1AD1E /* utils */,
 			);
 			path = FWF_ORM;
@@ -428,6 +449,7 @@
 				DF91D9A31730A12700E1AD1E /* OBJUInteger.m in Sources */,
 				DF354017173165E700DAF45C /* EntityTest.m in Sources */,
 				DF331F34173309C400AC4513 /* EntityTest1.m in Sources */,
+				DF547ECA174917BF00320450 /* FWFImpExpPorter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

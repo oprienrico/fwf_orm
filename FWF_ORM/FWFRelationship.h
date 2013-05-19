@@ -10,6 +10,15 @@
 #import <Foundation/Foundation.h>
 #import "FMDbWrapper.h"
 
+/*
+ *  SQL Actions (used for the Foreign Keys)
+ */
+typedef enum{
+    FWF_FK_ACTION_SET_NULL,
+    FWF_FK_ACTION_CASCADE
+} FWF_FK_ACTION;
+
+
 @interface FWFRelationship : NSObject{
     Class referencedEntityClass;
 }

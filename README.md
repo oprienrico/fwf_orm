@@ -148,11 +148,27 @@ New OBJ DataTypes
 ---------------------
 They are available the "object equivalent" of some primitive types:
 
-- OBJBool
-- OBJInteger
-- OBJUInteger
+* OBJBool
+* OBJInteger
+* OBJUInteger
 
-Use them safely as attributes of entities.
+Use them instead of primitive types, as attributes of entities.
 
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/e50a04cf21007790f1c575db22758d6e "githalytics.com")](http://githalytics.com/hjgauss/fwf_orm)
 
+Extensions
+---------------------
+
+###Import Export
+You can use this module to import/export entities, for example it can be useful to load predefined data on first start (of the app)
+
+#####import methods
+
+
+* import into the database the entities contained in the binary file. They MUST be of the same class. Returns false if the file does not exist.
+
+		- (bool) importFromBinaryFileWithPath:(NSString *) path;
+		
+#####export methods
+* exports the selected entities to a binary file. Returns false if it encounters problems while saving.
+
+		- (bool) exportToBinaryFileWithPath:(NSString *) path;

@@ -6,7 +6,7 @@
 //
 
 #import "FWFRelationship.h"
-#import "FWF_Costants.h"
+
 @class FWFEntity;
 
 

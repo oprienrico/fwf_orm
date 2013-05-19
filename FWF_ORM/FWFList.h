@@ -15,6 +15,8 @@
 
 -(id) initWithClass:(Class) cl;
 
+- (NSString *) entityName;
+
 - (FWFList *) beginSQLChainedFiltering;
 - (FWFList *) executeSQLChainedFiltering;
 - (FWFList *) all;

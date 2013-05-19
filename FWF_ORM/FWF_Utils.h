@@ -14,5 +14,5 @@
 + (NSMutableDictionary *) filterAttributesMutable:(NSMutableDictionary *) dictio;
 + (NSDictionary *) filterFK:(NSDictionary *) dictio;//unused
 + (NSMutableDictionary *) filterFKMutable:(NSMutableDictionary *) dictio;//unused
-+ (id) setItemFromDictio:(NSDictionary *) dictio withClass:(Class) cl;
++ (id) setItemFromFMDBDictio:(NSDictionary *) dictio withClass:(Class) cl;
 @end

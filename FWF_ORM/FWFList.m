@@ -37,14 +37,14 @@
 -(id)initWithClass:(Class)cl{
     if (self = [super init]){
         entity_class = cl;
-        baseSQL = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE 1=1",[self getEntityName]];
+        baseSQL = [[NSString alloc] initWithFormat:@"SELECT * FROM %@ WHERE 1=1",[self entityName]];
         [self resetSQLPredicateList];
         _isChainedFilter = false;
     }
     return self;
 }
 
-- (NSString *) getEntityName{
+- (NSString *) entityName{
     return NSStringFromClass(entity_class);
 }
 
@@ -76,7 +76,7 @@
     NSMutableArray *tempEntityList = [[NSMutableArray alloc] init];
     
     for (NSDictionary *dictio in tempList) {
-        [tempEntityList addObject:[FWF_Utils setItemFromDictio:dictio withClass:entity_class]];
+        [tempEntityList addObject:[FWF_Utils setItemFromFMDBDictio:dictio withClass:entity_class]];
     }
     
     [db close];

@@ -7,6 +7,7 @@
 
 #import "FWFRelationship_XToOne.h"
 
+#import "FWF_Costants.h"
 #import "ClassUtility.h"
 #import "commonClassExtensions.h"
 #import "newOBJDataTypes.h"
@@ -148,7 +149,7 @@
     NSMutableArray *tempEntityList = [[NSMutableArray alloc] init];
     
     for (NSDictionary *dictio in tempList) {
-        [tempEntityList addObject:[FWF_Utils setItemFromDictio:dictio withClass:[self referencedEntityClass]]];
+        [tempEntityList addObject:[FWF_Utils setItemFromFMDBDictio:dictio withClass:[self referencedEntityClass]]];
     }
     
     [db close];

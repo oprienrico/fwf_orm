@@ -120,8 +120,8 @@
 
 -(void) createTable{
     FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
-    if(![db tableExists:[self getEntityName]]){
-        __block NSString *sql = [NSString stringWithFormat: @"CREATE TABLE %@ (pk INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ",[self getEntityName]];
+    if(![db tableExists:[self entityName]]){
+        __block NSString *sql = [NSString stringWithFormat: @"CREATE TABLE %@ (pk INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ",[self entityName]];
         __block NSString *fksql_vars = [[NSString alloc] init];
         __block NSString *fksql_constr = [[NSString alloc] init];
 
@@ -138,7 +138,7 @@
                 id value = [self valueForKey:attrName];
                 if(![db tableExists:[value getLookupTableName]]){
                     NSString *ref_name = [value referencedEntityName];
-                    NSString * self_name = [self getEntityName];
+                    NSString * self_name = [self entityName];
 
                     [db executeUpdate:[NSString stringWithFormat:@"CREATE TABLE %@ (%@ INTEGER NOT NULL,%@ INTEGER NOT NULL, PRIMARY KEY(%@, %@),FOREIGN KEY (%@) REFERENCES %@(pk) ON DELETE CASCADE,FOREIGN KEY (%@) REFERENCES %@(pk) ON DELETE CASCADE)",[value getLookupTableName], self_name, ref_name, self_name, ref_name, self_name, self_name, ref_name, ref_name]];
                 }
@@ -157,11 +157,11 @@
     return [_pkOBJ unsignedIntegerValue];
 }
 
-- (NSString *) getEntityName{
+- (NSString *) entityName{
     return NSStringFromClass([self class]);
 }
 
-+ (NSString *) getEntityName{
++ (NSString *) entityName{
     return NSStringFromClass([self class]);
 }
 
@@ -192,7 +192,7 @@
         //if pk > 0 it means its an object retrieved from db
         
         //prepare query string
-        NSMutableString *sql=[[NSMutableString alloc] initWithFormat:@"UPDATE %@ SET ", [self getEntityName]];
+        NSMutableString *sql=[[NSMutableString alloc] initWithFormat:@"UPDATE %@ SET ", [self entityName]];
         //NSLog(@"preprep dictio: %@", valuesDictio);
         [valuesDictio enumerateKeysAndObjectsUsingBlock:^(id attrName, id attrValue, BOOL *stop) {
             Class attrClass = [NSClassFromString([attributesType objectForKey:attrName]) class];
@@ -230,7 +230,7 @@
         return [database executeUpdate:sql withParameterDictionary:compatibleValuesDictio];
     }else {
         //prepare query string
-        NSMutableString *sql1=[[NSMutableString alloc] initWithFormat:@"INSERT INTO %@ (",[self getEntityName]];
+        NSMutableString *sql1=[[NSMutableString alloc] initWithFormat:@"INSERT INTO %@ (",[self entityName]];
         NSMutableString *sql2=[[NSMutableString alloc] initWithFormat:@"VALUES ("];
         
         [valuesDictio enumerateKeysAndObjectsUsingBlock:^(id attrName, id attrValue, BOOL *stop) {
@@ -291,7 +291,7 @@
 }
 
 - (bool) deleteWithDbObj:(FMDbWrapper *)database{
-    return [database executeUpdate:[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE pk=%lu", [self getEntityName], (long)[_pkOBJ unsignedIntegerValue]]];
+    return [database executeUpdate:[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE pk=%lu", [self entityName], (long)[_pkOBJ unsignedIntegerValue]]];
 }
 
 - (void) deleteFromStorage{

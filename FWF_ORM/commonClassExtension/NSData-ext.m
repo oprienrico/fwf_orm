@@ -11,14 +11,6 @@
 
 @implementation NSData(FWF)
 
-/*+ (BOOL)canBeStoredAsBlob{
-    return [self conformsToProtocol:@protocol(NSCoding)];
-}
-
-- (BOOL)canBeStoredAsBlob{
-    return [self conformsToProtocol:@protocol(NSCoding)];
-}*/
-
 + (NSString *) sqlType{
     return @"BLOB";
 }

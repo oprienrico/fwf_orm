@@ -46,7 +46,7 @@
 - (FWFList *) objects{
     FWFList *listObjs = [[FWFList alloc] initWithClass:[self referencedEntityClass]];
 
-        [listObjs setValue:[NSString stringWithFormat:@"SELECT %@.* FROM %@ INNER JOIN %@ AS lutb ON %lu=lutb.%@ AND lutb.%@ = %@.pk WHERE 1=1 ", [self referencedEntityName], [self referencedEntityName], [self getLookupTableName], (long)[delegate pk], [delegate getEntityName], [self referencedEntityName], [self referencedEntityName]] forKey:@"baseSQL"];
+        [listObjs setValue:[NSString stringWithFormat:@"SELECT %@.* FROM %@ INNER JOIN %@ AS lutb ON %lu=lutb.%@ AND lutb.%@ = %@.pk WHERE 1=1 ", [self referencedEntityName], [self referencedEntityName], [self getLookupTableName], (long)[delegate pk], [delegate entityName], [self referencedEntityName], [self referencedEntityName]] forKey:@"baseSQL"];
     
     return listObjs;
 }
@@ -60,7 +60,7 @@
 }
 
 - (NSString *) getLookupTableName{        
-    return [[self class] buildLookupTableNameWithClassName1:[delegate getEntityName] andClassName2:[self referencedEntityName]];
+    return [[self class] buildLookupTableNameWithClassName1:[delegate entityName] andClassName2:[self referencedEntityName]];
 }
 
 /*- (void) addObjectWithPkOBJUInteger:(OBJUInteger *) pk{
@@ -96,7 +96,7 @@
 
 - (bool) removeObjectWithPk:(NSUInteger) pk{
     FMDbWrapper *db = FWF_STD_DB_ENGINE;
-    NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=%lu AND %@=%lu", [self getLookupTableName], [delegate getEntityName], (long)[delegate pk], [self referencedEntityName], (long) pk];
+    NSString *sql = [NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=%lu AND %@=%lu", [self getLookupTableName], [delegate entityName], (long)[delegate pk], [self referencedEntityName], (long) pk];
     if (![db executeUpdate:sql]) {
         //close the open connection
         [db close];
@@ -194,7 +194,7 @@
     
     [db beginTransaction];
     //delete all objects
-    [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=%lu", [self getLookupTableName], [delegate getEntityName], (long)[delegate pk]]];
+    [db executeUpdate:[NSString stringWithFormat:@"DELETE FROM %@ WHERE %@=%lu", [self getLookupTableName], [delegate entityName], (long)[delegate pk]]];
     
     __block bool no_error = true;
     [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
