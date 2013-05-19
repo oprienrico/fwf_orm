@@ -16,6 +16,10 @@
 #import "FWFRelationship_OneToMany.h"
 #import "FWFRelationship_ManyToMany.h"
 
+@interface FWFEntity (FWFImpExpPorter)
+-(void) createTableWithDb:(FMDbWrapper *)db;
+@end
+
 @implementation FWFEntity (FWFImpExpPorter)
 + (FWFImpExpPorter *) ImpExp{
     return [[FWFImpExpPorter alloc] initWithClass:[self class]];
@@ -139,6 +143,13 @@
 }
 @end
 
+@implementation FWF (Extension_FWFImpExpPorter)
++ (FWFImpExpPorter *) ImpExp{
+    return [[FWFImpExpPorter alloc] initInterface];
+}
+
+@end
+
 @interface FWFImpExpPorter (){
     FWFList *fwflist;
     NSString *className;
@@ -163,12 +174,35 @@
     return self;
 }
 
+- (id) initInterface{
+    if (self = [super init]){
+        className=nil;
+        fwflist=nil;
+    }
+    return self;
+}
+
+/*
+ * BINARY IMPORT EXPORT
+ */
+
 - (bool) exportToBinaryFileWithPath:(NSString *) path{
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];
+    if (className == nil) {
+        NSArray *listEntitiesToSave = [FWF listNamesOfStoredEntities];
+        
+        [archiver encodeObject:@"fwf" forKey:@"c"];//classname for typecheck
+        [archiver encodeObject:listEntitiesToSave forKey:@"l"];//used to retrieve data in order
+        
+        [listEntitiesToSave enumerateObjectsUsingBlock:^(id entName, NSUInteger idx, BOOL *stop) {
+            [archiver encodeObject:[[[NSClassFromString(entName) objects] all] listEntities] forKey:entName];
+        }];
+    }else{    
+        [archiver encodeObject:className forKey:@"c"];//classname for typecheck
+        [archiver encodeObject:[fwflist listEntities] forKey:@"l"];//list
+    }
     
-    [archiver encodeObject:className forKey:@"c"];//classname for typecheck
-    [archiver encodeObject:[fwflist listEntities] forKey:@"l"];//list
     [archiver finishEncoding];
     
     return [data writeToFile:path atomically:true];
@@ -181,24 +215,73 @@
     
     NSData *data = [[NSData alloc] initWithContentsOfFile:path];
     NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:data];
-    if (![className isEqualToString:[unarchiver decodeObjectForKey:@"c"]]) {
-        @throw FWF_EXCEPTION_IMPEXP_IMPORT_ENTITY_MISMATCH;
+    if (className == nil) {
+        if (![[unarchiver decodeObjectForKey:@"c"] isEqualToString:@"fwf"]) {
+            @throw FWF_EXCEPTION_IMPEXP_IMPORT_ENTITY_MISMATCH;
+        }
+        NSArray *listEntitiesToSave = [unarchiver decodeObjectForKey:@"l"];
+        NSArray *list = nil;
+        
+        FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
+        [db beginTransaction];
+        
+        for (NSString *entName in listEntitiesToSave) {
+            list = [unarchiver decodeObjectForKey:entName];
+            [[NSClassFromString(entName) alloc] createTableWithDb:db];//create table if not exist
+            [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                [obj forceSaveWithDbObj:db];
+            }];
+        }
+        
+        [unarchiver finishDecoding];
+        [db commit];
+        [db close];
+    }else{
+        if (![className isEqualToString:[unarchiver decodeObjectForKey:@"c"]]) {
+            @throw FWF_EXCEPTION_IMPEXP_IMPORT_ENTITY_MISMATCH;
+        }
+        NSArray *list = [unarchiver decodeObjectForKey:@"l"];
+    
+        [unarchiver finishDecoding];
+    
+        FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
+        [db beginTransaction];
+        [[NSClassFromString(className) alloc] createTableWithDb:db];//create table if not exist
+        
+        [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            [obj forceSaveWithDbObj:db];
+        }];
+    
+        [db commit];
+        [db close];
     }
-    NSArray *list = [unarchiver decodeObjectForKey:@"l"];
-    
-    [unarchiver finishDecoding];
-    
-    FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
-    [db beginTransaction];
-    
-    [list enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [obj forceSaveWithDbObj:db];
-    }];
-    
-    [db commit];
-    [db close];
-    
     return true;
 }
 
+/*
+ *  DATABASE(SQLITE) IMPORT/EXPORT
+ */
+
+- (bool) exportToSqliteFileWithPath:(NSString *) path{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *to_path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:path];
+    
+    //if file exist, delete it
+    if ([fm fileExistsAtPath:to_path]) 
+        if(![fm removeItemAtPath:to_path error:nil])
+            return false;
+        
+    if(![fm copyItemAtPath:[FMDbWrapper getStandardDbPath] toPath:to_path error:nil])
+        return false;
+    else{
+        NSLog(@"exported file to:\n%@",to_path);
+        return true;
+    }
+}
+- (bool) overwriteDataWithTemplateDbFromPath:(NSString *)path{
+    return [FMDbWrapper overwriteDatabaseWithTemplateDbFromPath:path];
+}
+- (bool) overwriteDataWithTemplateDb{
+    return [FMDbWrapper overwriteDatabaseWithTemplateDbFromPath:@"templatedb.sqlite"];
+}
 @end

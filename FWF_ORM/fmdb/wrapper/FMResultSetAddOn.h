@@ -14,7 +14,7 @@
 
 - (NSDictionary*)resultDictionaryWithOverridedTypes:(NSArray *) overridedTypes;
 
-- (NSArray *)getResultArrayOfDictio;
-- (NSArray *)getResultArrayOfDictioWithOverridedTypes:(NSArray *) overridedTypes;
+- (NSArray *)listAllResultsAsArrayOfDictio;
+- (NSArray *)listAllResultsAsArrayOfDictioWithOverridedTypes:(NSArray *) overridedTypes;
 
 @end

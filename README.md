@@ -19,7 +19,7 @@ Import into the XCode Project the `FWF_ORM` folder, __enable ARC__ and add libsq
 
 ####An Example
 
-Define a class that inherits from `FWFEntity`, that will be our entity.
+Import `FWF_ORMLib.h` and define a class that inherits from `FWFEntity`, that will be our entity.
 In the example we will name it `EntityTest` (wow a name that's unexpected…) with an `NSString` attribute `name`.
 
 ___NB:Attributes must be Objects! (see [`newOBJDataTypes` section](#new-obj-datatypes))___
@@ -161,14 +161,30 @@ Extensions
 ###Import Export
 You can use this module to import/export entities, for example it can be useful to load predefined data on first start (of the app)
 
-#####import methods
+####import methods
 
 
 * import into the database the entities contained in the binary file. They MUST be of the same class. Returns false if the file does not exist.
 
 		- (bool) importFromBinaryFileWithPath:(NSString *) path;
 		
-#####export methods
+* overwrites (or inits) the current database with the default "templatedb.sqlite" (it must be available in the folder where the program is executed, remember to add it in the copy boundle in Build Phases)
+
+		- (bool) overwriteDataWithTemplateDb;
+		
+* overwrites (or inits) the current database with the one provided in the path (considered as template)
+
+		- (bool) overwriteDataWithTemplateDbFromPath:(NSString *)path;
+		
+####export methods
 * exports the selected entities to a binary file. Returns false if it encounters problems while saving.
 
 		- (bool) exportToBinaryFileWithPath:(NSString *) path;
+		
+* exports the data to sqlite file (overwriting any existent file with the same name). Returns false if it encounters problems while saving.
+
+		- (bool) exportToSqliteFileWithPath:(NSString *) path;
+		
+####Examples
+
+See the examples in the source code

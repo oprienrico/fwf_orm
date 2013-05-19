@@ -73,7 +73,7 @@
     
 }
 
-- (id)initDatabase{
+- (id) initDatabase{
     //try to init db
     self = [FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
     if (![self open]){
@@ -94,7 +94,7 @@
     return self;
 }
 
-- (id)initDatabaseWithForeignKeys{
+- (id) initDatabaseWithForeignKeys{
     NSString *db_path = [FMDbWrapper getStandardDbPath];
     
     //try to init db
@@ -109,7 +109,7 @@
     return self;
 }
 
-- (id)initDatabaseWithoutForeignKeys{
+- (id) initDatabaseWithoutForeignKeys{
     NSString *db_path = [FMDbWrapper getStandardDbPath];
     
     //try to init db
@@ -136,10 +136,15 @@
     [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
 }
 
++ (bool) databaseExist{
+    return [[NSFileManager defaultManager] fileExistsAtPath:[FMDbWrapper getStandardDbPath]];
+}
+
 + (bool) resetDatabase{
     NSString *db_path = [FMDbWrapper getStandardDbPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
-    [fileManager removeItemAtPath:db_path error:nil];
+    if(![fileManager removeItemAtPath:db_path error:nil])
+        return false;
     //init a db
     FMDbWrapper *db = [FMDbWrapper databaseWithPath:[FMDbWrapper getStandardDbPath]];
     
@@ -159,53 +164,67 @@
     [fileManager removeItemAtPath:db_path error:nil];
 }
 
-- (id)initDatabaseWithReset:(BOOL)reset{
+- (id) initDatabaseWithReset:(BOOL)reset{
     if (reset) {
         [[self class] resetDatabase];
     }
     return [self initDatabase];
 }
 
-//  inizializza database da template predefinito
-- (id)initDatabaseFromTemplateWithReset:(BOOL) reset{
-    return [self initDatabaseFromTemplateFile:@"templatedb.sqlite" reset:reset];
+//  init database with a template database (default is "templatedb.sqlite")
+- (id)initDatabaseWithTemplateDb{
+    return [self initDatabaseWithTemplateDbFromPath:@"templatedb.sqlite" byOverwriting:false];
 }
 
-//  inizializza database da template specificandone nome
-- (id)initDatabaseFromTemplateFile:(NSString *) fileTemplate reset:(BOOL)reset{
-
-    NSFileManager *fm = [NSFileManager defaultManager];    
-    NSString *db_path = [FMDbWrapper getStandardDbPath];
-    NSString *template_path =  [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileTemplate];
-    
-    //se il template non esiste ritorna nil
-    if (![fm fileExistsAtPath:template_path]) {
-        NSLog(@"template not existent");
-        return nil;
-    }
-    
-    //se reset YES cancella copia precedente del db e forza reinizializzazione da template
-    if(reset){
-        [fm removeItemAtPath:db_path error:nil];
-        NSLog(@"Database reset");
-    }
-    //se esiste già non copio nulla e lascio il file precedente
-    if (![fm fileExistsAtPath:db_path]){
-        [fm copyItemAtPath:template_path toPath:db_path error:nil];
-        NSLog(@"Database copied from template");
-    }
-        
+//  init database with a template database from the path specified
+- (id) initDatabaseWithTemplateDbFromPath:(NSString *) template_path byOverwriting:(bool)isToOverwrite{
+    [[self class] createDatabaseWithTemplateDbFromPath:template_path byOverwriting:isToOverwrite];
     //inizializzo db
     return [self initDatabase];
+}
+
++ (bool) overwriteDatabaseWithTemplateDb{
+    return [self createDatabaseWithTemplateDbFromPath:@"templatedb.sqlite" byOverwriting:true];
+}
+
++ (bool) overwriteDatabaseWithTemplateDbFromPath:(NSString *) template_path{
+    return [self createDatabaseWithTemplateDbFromPath:template_path byOverwriting:true];
+}
+
++ (bool) createDatabaseWithTemplateDbFromPath:(NSString *) template_path byOverwriting:(bool)isToOverwrite{
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSString *db_path = [FMDbWrapper getStandardDbPath];
     
+    //fix path search (if it doesn't start from radix, make path relative to current app bundle position)
+    if ([template_path characterAtIndex:0]!='/')
+        template_path =  [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:template_path];
+    
+    //it template file doesn't exist, return nil
+    if (![fm fileExistsAtPath:template_path]) {
+        NSLog(@"template database does not exist, do nothing");
+        return false;
+    }
+    
+    //if isToOverwrite is true it deletes the current db file (so it will be replaced by the template)
+    if (isToOverwrite) {
+        if(![fm removeItemAtPath:db_path error:nil])
+            return false;
+    }
+        
+    if(![fm copyItemAtPath:template_path toPath:db_path error:nil])
+        return false;
+    else
+        return true;
+    //NSLog(@"Database overwritten with template db");
 }
 
-- (NSArray *)arrayFromExecutingSQL:(NSString *)sql{
-    return [[self executeQuery:sql] getResultArrayOfDictio];
+
+- (NSArray *) arrayFromExecutingSQL:(NSString *)sql{
+    return [[self executeQuery:sql] listAllResultsAsArrayOfDictio];
 }
 
-- (NSArray *)arrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes{
-    return [[self executeQuery:sql] getResultArrayOfDictioWithOverridedTypes:overridedTypes];
+- (NSArray *) arrayFromExecutingSQL:(NSString *)sql overridingTypes:(NSArray *)overridedTypes{
+    return [[self executeQuery:sql] listAllResultsAsArrayOfDictioWithOverridedTypes:overridedTypes];
 }
 
 

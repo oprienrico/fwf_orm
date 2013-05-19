@@ -35,9 +35,11 @@
 }
 
 -(id) initWithPersistenceCheck{
-    self = [self init];
-    [self createTable];
-        
+    if(self = [self init]){
+        FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK; 
+        [self createTableWithDb:db];
+        [db close];
+    }
     return self;
 }
 
@@ -114,12 +116,14 @@
 }
 
 -(void) initEntityPersistence{
+    FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
     [self checkForeignKeysInitialization];
-    [self createTable];
+    [self createTableWithDb:db];
+    [db close];
 }
 
--(void) createTable{
-    FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
+-(void) createTableWithDb:(FMDbWrapper *)db{
+
     if(![db tableExists:[self entityName]]){
         __block NSString *sql = [NSString stringWithFormat: @"CREATE TABLE %@ (pk INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ",[self entityName]];
         __block NSString *fksql_vars = [[NSString alloc] init];
@@ -150,7 +154,6 @@
         FWFLog(@"SQL:\n%@",sql);
         [db executeUpdate:sql];
     }
-    [db close];
 }
 
 - (NSUInteger) pk{

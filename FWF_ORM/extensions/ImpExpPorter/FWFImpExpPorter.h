@@ -9,6 +9,7 @@
 #import "FWFList.h"
 #import "FWFRelationship_XToOne.h"
 #import "FWF_Utils.h"
+#import "FWF_ORM.h"
 
 @class FWFImpExpPorter;
 
@@ -28,6 +29,10 @@
 
 @end;
 
+@interface FWF (Extension_FWFImpExpPorter)
++ (FWFImpExpPorter *) ImpExp;
+@end;
+
 @interface FWF_Utils (UtilsExtension_FWFImpExpPorter)
 + (id) setItemFromCoder:(NSCoder *) decoder withClass:(Class) cl;
 @end
@@ -44,10 +49,19 @@
 
 - (id) initWithClass:(Class) cl;
 - (id) initWithListObject:(id) obj;
+- (id) initInterface;
 
-//exports the selected entities to a binary file. Returns false if it encounters problems while saving.
+//exports the selected entities to a binary file (overwriting any existent file with the same name). Returns false if it encounters problems while saving.
 - (bool) exportToBinaryFileWithPath:(NSString *) path;
 //import into the database the entities contained in the binary file. They MUST be of the same class. Returns false if the file does not exist.
 - (bool) importFromBinaryFileWithPath:(NSString *) path;
 
+
+/*  DATABASE(SQLITE) IMPORT/EXPORT  */
+//exports the data to sqlite file (overwriting any existent file with the same name). Returns false if it encounters problems while saving.
+- (bool) exportToSqliteFileWithPath:(NSString *) path;
+//overwrites (or inits) the current database with the default "templatedb.sqlite" (it must be available in the folder where the program is executed, remember to add it in the copy boundle in Build Phases)
+- (bool) overwriteDataWithTemplateDb;
+//overwrites (or inits) the current database with the one provided in the path (considered as template)
+- (bool) overwriteDataWithTemplateDbFromPath:(NSString *)path;
 @end

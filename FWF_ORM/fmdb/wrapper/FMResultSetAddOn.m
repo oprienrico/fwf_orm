@@ -69,7 +69,7 @@
     return nil;
 }
 
-- (NSArray *)getResultArrayOfDictio{
+- (NSArray *)listAllResultsAsArrayOfDictio{
     NSMutableArray *resultArray = [[NSMutableArray alloc] init];
     
     while ([self next]) {
@@ -79,7 +79,7 @@
     return [NSArray arrayWithArray:resultArray];
 }
 
-- (NSArray *)getResultArrayOfDictioWithOverridedTypes:(NSArray *) overridedTypes {
+- (NSArray *)listAllResultsAsArrayOfDictioWithOverridedTypes:(NSArray *) overridedTypes {
     NSMutableArray *resultArray = [[NSMutableArray alloc] init];
     
     

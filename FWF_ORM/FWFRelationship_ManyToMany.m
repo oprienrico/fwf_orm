@@ -53,9 +53,9 @@
 
 + (NSString *) buildLookupTableNameWithClassName1:(NSString *) name1 andClassName2:(NSString *) name2{
     if ([name1 compare:name2] > 0) {
-        return [NSString stringWithFormat:@"lu_%@_%@", name1, name2];
+        return [NSString stringWithFormat:@"fwflu_%@_%@", name1, name2];
     }else{
-        return [NSString stringWithFormat:@"lu_%@_%@", name2, name1];
+        return [NSString stringWithFormat:@"fwflu_%@_%@", name2, name1];
     }
 }
 

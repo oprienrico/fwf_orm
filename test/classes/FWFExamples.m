@@ -253,7 +253,43 @@
     NSLog(@"select only referenced entities by the foreign key specified \n%@",[[[sofa.onetomanyfk objectsReferencedWithAttribute:@"foreignKey1"] all] serializeWithDictionary]);
 }
 
-+ (void) testImportExport{
++ (void) testImportExportDatabase{
+    [[EntityTest alloc] initEntityPersistence];
+    
+    EntityTest *testentity = [[EntityTest alloc] init];
+    
+    testentity.name = @"Jack";
+    [testentity save];
+    
+    //we can use the same pointer and init with another object (unlinked with the previous one)
+    testentity = [[EntityTest alloc] init];
+    testentity.name = @"Robert";
+    [testentity save];
+    
+    testentity = [[EntityTest alloc] init];
+    testentity.name = @"John";
+    testentity.number = @11;
+    [testentity save];
+    
+    testentity = [[EntityTest alloc] init];
+    testentity.name = @"Mario";
+    testentity.number = @11;
+    [testentity save];
+    
+    NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
+    
+    NSLog(@"exporting success: %s", [[FWF ImpExp] exportToSqliteFileWithPath:@"templatedb.sqlite"] ? "true" : "false");
+    
+    NSLog(@"clening and reserialize (it will return an empty set)");
+    [FWF resetStorage];
+    [[EntityTest alloc] initEntityPersistence];
+    NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
+    
+    NSLog(@"importing success: %s", [[FWF ImpExp] overwriteDataWithTemplateDbFromPath:@"templatedb.sqlite"] ? "true" : "false");
+    NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
+}
+
++ (void) testImportExportSingleEntityAsBinary{
     [[EntityTest alloc] initEntityPersistence];
     
     EntityTest *testentity = [[EntityTest alloc] init];
@@ -277,7 +313,6 @@
     [testentity save];
     
     NSLog(@"exporting success: %s", [[EntityTest ImpExp] exportToBinaryFileWithPath:@"test"] ? "true" : "false");
-    NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
     
     NSLog(@"clening and reserialize (it will return an empty set)");
     [FWF resetStorage];
@@ -286,6 +321,41 @@
     
     NSLog(@"import");
     NSLog(@"importing success: %s", [[EntityTest ImpExp] importFromBinaryFileWithPath:@"test"] ? "true" : "false");
+    NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
+}
+
++ (void) testImportExportAllSavedEntitiesAsBinary{
+    [[EntityTest alloc] initEntityPersistence];
+    
+    EntityTest *testentity = [[EntityTest alloc] init];
+    
+    testentity.name = @"Jack";
+    [testentity save];
+    
+    //we can use the same pointer and init with another object (unlinked with the previous one)
+    testentity = [[EntityTest alloc] init];
+    testentity.name = @"Robert";
+    [testentity save];
+    
+    testentity = [[EntityTest alloc] init];
+    testentity.name = @"John";
+    testentity.number = @11;
+    [testentity save];
+    
+    testentity = [[EntityTest alloc] init];
+    testentity.name = @"Mario";
+    testentity.number = @11;
+    [testentity save];
+    
+    NSLog(@"exporting success: %s", [[FWF ImpExp] exportToBinaryFileWithPath:@"test"] ? "true" : "false");
+    
+    NSLog(@"clening and reserialize (it will return an empty set)");
+    [FWF resetStorage];
+    [[EntityTest alloc] initEntityPersistence];
+    NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
+    
+    NSLog(@"import");
+    NSLog(@"importing success: %s", [[FWF ImpExp] importFromBinaryFileWithPath:@"test"] ? "true" : "false");
     NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
 }
 

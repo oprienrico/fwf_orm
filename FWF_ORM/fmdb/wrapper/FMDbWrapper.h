@@ -19,16 +19,21 @@
 
 + (NSString *) getStandardDbPath;
 
-- (id)initDatabase;
-- (id)initDatabaseWithForeignKeys;
-- (id)initDatabaseWithoutForeignKeys;
+- (id) initDatabase;
+- (id) initDatabaseWithForeignKeys;
+- (id) initDatabaseWithoutForeignKeys;
 
-- (id)initDatabaseWithReset:(BOOL)reset;
+- (id) initDatabaseWithReset:(BOOL)reset;
 
-- (id)initDatabaseFromTemplateWithReset:(BOOL) reset;
-- (id)initDatabaseFromTemplateFile:(NSString *) fileTemplate reset:(BOOL)reset;
+- (id) initDatabaseWithTemplateDb;
+- (id) initDatabaseWithTemplateDbFromPath:(NSString *) template_path byOverwriting:(bool)isToOverwrite;
++ (bool) overwriteDatabaseWithTemplateFromPath:(NSString *) template_path;
++ (bool) overwriteDatabaseWithTemplateDb;
++ (bool) overwriteDatabaseWithTemplateDbFromPath:(NSString *) template_path;
++ (bool) createDatabaseWithTemplateDbFromPath:(NSString *) template_path byOverwriting:(bool)isToOverwrite;
 
 //it deletes and recreates the database (so when you will init the db the .sqlite file will already be there
++ (bool) databaseExist;
 + (bool) resetDatabase;
 + (void) deleteDatabase;
 - (void) vacuum;

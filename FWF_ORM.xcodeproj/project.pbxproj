@@ -10,6 +10,7 @@
 		DF331F34173309C400AC4513 /* EntityTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = DF331F33173309C400AC4513 /* EntityTest1.m */; };
 		DF354017173165E700DAF45C /* EntityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF354016173165E700DAF45C /* EntityTest.m */; };
 		DF547ECA174917BF00320450 /* FWFImpExpPorter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF547EC9174917BF00320450 /* FWFImpExpPorter.m */; };
+		DF547ED017498D8700320450 /* templatedb.sqlite in CopyFiles */ = {isa = PBXBuildFile; fileRef = DF547ECD17498C9500320450 /* templatedb.sqlite */; };
 		DF91D91417309EC400E1AD1E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DF91D91317309EC400E1AD1E /* Foundation.framework */; };
 		DF91D92517309F7500E1AD1E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D92417309F7500E1AD1E /* main.m */; };
 		DF91D9311730A0A200E1AD1E /* EntityTest5.m in Sources */ = {isa = PBXBuildFile; fileRef = DF91D9281730A0A200E1AD1E /* EntityTest5.m */; };
@@ -53,12 +54,13 @@
 /* Begin PBXCopyFilesBuildPhase section */
 		DF91D90E17309EC400E1AD1E /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			buildActionMask = 12;
+			dstPath = "";
+			dstSubfolderSpec = 16;
 			files = (
+				DF547ED017498D8700320450 /* templatedb.sqlite in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
@@ -69,6 +71,8 @@
 		DF354016173165E700DAF45C /* EntityTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest.m; sourceTree = "<group>"; };
 		DF547EC8174917BF00320450 /* FWFImpExpPorter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFImpExpPorter.h; sourceTree = "<group>"; };
 		DF547EC9174917BF00320450 /* FWFImpExpPorter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFImpExpPorter.m; sourceTree = "<group>"; };
+		DF547ECC1749439A00320450 /* FWF_ORMLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWF_ORMLib.h; sourceTree = "<group>"; };
+		DF547ECD17498C9500320450 /* templatedb.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = templatedb.sqlite; sourceTree = SOURCE_ROOT; };
 		DF91D91017309EC400E1AD1E /* FWF_ORM */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = FWF_ORM; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF91D91317309EC400E1AD1E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		DF91D92217309F7500E1AD1E /* FWF_ORM-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FWF_ORM-Prefix.pch"; sourceTree = "<group>"; };
@@ -211,6 +215,7 @@
 		DF91D92117309F7500E1AD1E /* test */ = {
 			isa = PBXGroup;
 			children = (
+				DF547ECD17498C9500320450 /* templatedb.sqlite */,
 				DF91D9261730A0A200E1AD1E /* classes */,
 				DF91D92217309F7500E1AD1E /* FWF_ORM-Prefix.pch */,
 				DF91D92317309F7500E1AD1E /* FWF_ORM.1 */,
@@ -246,10 +251,11 @@
 				DF91D9371730A12700E1AD1E /* commonClassExtension */,
 				DF91D9511730A12700E1AD1E /* fmdb */,
 				DF547EC6174917BE00320450 /* extensions */,
+				DF547ECC1749439A00320450 /* FWF_ORMLib.h */,
 				DF91D9641730A12700E1AD1E /* FWF_ORM.h */,
+				DF91D9651730A12700E1AD1E /* FWF_ORM.m */,
 				DF91D9631730A12700E1AD1E /* FWF_Costants.h */,
 				DF91D9621730A12700E1AD1E /* FWF_Config.h */,
-				DF91D9651730A12700E1AD1E /* FWF_ORM.m */,
 				DF91D9661730A12700E1AD1E /* FWF_Utils.h */,
 				DF91D9671730A12700E1AD1E /* FWF_Utils.m */,
 				DF91D9681730A12700E1AD1E /* FWFEntity.h */,

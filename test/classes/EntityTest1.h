@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 hjgauss. All rights reserved.
 //
 
-#import "FWF_ORM.h"
+#import "FWF_ORMLib.h"
 
 @interface EntityTest1 : FWFEntity{
     NSString *name;

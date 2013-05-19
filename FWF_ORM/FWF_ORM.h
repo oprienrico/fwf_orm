@@ -5,28 +5,12 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
-//costants and defines
-#import "FWF_Costants.h"
-
-#import "DateUtils.h"
-#import "ClassUtility.h"
-#import "newOBJDataTypes.h"
-#import "commonClassExtensions.h"
-#import "FMDbWrapper.h"
-
-#import "FWFList.h"
-#import "FWFEntity.h"
-#import "FWFRelationship.h"
-#import "FWFRelationship_OneToMany.h"
-#import "FWFRelationship_XToOne.h"
-#import "FWFRelationship_ManyToMany.h"
-
-
 @interface FWF : NSObject
 
 + (void) resetStorage;
 + (void) shrinkDownStorage;
+
++ (NSArray *) listClassesOfStoredEntities;
++ (NSArray *) listNamesOfStoredEntities;
 
 @end

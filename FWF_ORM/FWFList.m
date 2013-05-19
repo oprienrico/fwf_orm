@@ -72,7 +72,7 @@
         @throw FWF_EXCEPTION_PERSISTENCE;
     }
     
-    NSArray *tempList = [result getResultArrayOfDictio];
+    NSArray *tempList = [result listAllResultsAsArrayOfDictio];
     NSMutableArray *tempEntityList = [[NSMutableArray alloc] init];
     
     for (NSDictionary *dictio in tempList) {
