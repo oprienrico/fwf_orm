@@ -19,13 +19,13 @@ int main(int argc, const char * argv[])
         
         [FWF resetStorage];
         
-        //[FWFExamples test1];
+        [FWFExamples test1];
         //[FWFExamples test2];
         //[FWFExamples testChainedSQLFiltering];
         //[FWFExamples testChainedNSPredicateFiltering];
         //[FWFExamples testRelations1];
         //[FWFExamples testRelations2];
-        [FWFExamples testImportExportDatabase];
+        //[FWFExamples testImportExportDatabase];
         //[FWFExamples testImportExportSingleEntityAsBinary];
         //[FWFExamples testImportExportAllSavedEntitiesAsBinary];
         //[FWFExamples testBenchmark];

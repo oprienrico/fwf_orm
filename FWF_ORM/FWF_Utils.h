@@ -1,9 +1,8 @@
 //
-//  FWF_Utils.h
-//  FWF
+//  FWF Utilities
 //
-//  Created by black-gray on 04/03/13.
-//  Copyright (c) 2013 HJGauss. All rights reserved.
+//  Created by Enrico Opri.
+//  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -15,7 +14,5 @@
 + (NSDictionary *) filterFK:(NSDictionary *) dictio;//unused
 + (NSMutableDictionary *) filterFKMutable:(NSMutableDictionary *) dictio;//unused
 + (id) setItemFromFMDBDictio:(NSDictionary *) dictio withClass:(Class) cl;
-
-+ (NSString *) genRandStringLength: (int) len;
 
 @end

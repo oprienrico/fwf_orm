@@ -7,8 +7,7 @@
 
 #import "FMDbWrapper.h"
 #include "TargetConditionals.h"
-
-#define FMDB_EXCEPTION_UNSUPPORTED_PLATFORM [NSException exceptionWithName:@"FMDB_EXCEPTION_UNSUPPORTED_PLATFORM" reason:@"This platform is not recognized so it cannot be supported. Could not save the database." userInfo:nil]
+#import "FileManagementUtils.h"
 
 
 @implementation FMDbWrapper
@@ -46,31 +45,7 @@
 */
 
 + (NSString *) standardDbPath{
-#if TARGET_OS_IPHONE
-    // iOS
-    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return [documents_dir stringByAppendingPathComponent:[NSString stringWithFormat:@"database.sqlite"]];
-#elif TARGET_IPHONE_SIMULATOR
-    // iOS Simulator
-    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return [documents_dir stringByAppendingPathComponent:[NSString stringWithFormat:@"database.sqlite"]];
-#elif TARGET_OS_MAC
-    // Other kinds of Mac OS
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    
-    NSString *folder = [NSString stringWithFormat:@"~/Library/Application Support/%@/",[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutablePath"] lastPathComponent]];
-    folder = [folder stringByExpandingTildeInPath];
-    
-    if ([fileManager fileExistsAtPath: folder] == NO){
-        [fileManager createDirectoryAtPath:folder withIntermediateDirectories:YES attributes:nil error:nil];
-        //[fileManager createDirectoryAtPath: folder attributes: nil];
-    }
-
-    return [folder stringByAppendingPathComponent:[NSString stringWithFormat:@"database.sqlite"]];;
-#else
-    @throw FMDB_EXCEPTION_UNSUPPORTED_PLATFORM;
-#endif
-    
+    return [[FileManagementUtils standardAppSupportFolderPath] stringByAppendingPathComponent:@"database.sqlite"];
 }
 
 - (id) initDatabase{

@@ -1,22 +1,19 @@
 //
-//  FWF_Utils.m
-//  FWF
+//  FWF Utilities
 //
-//  Created by black-gray on 04/03/13.
-//  Copyright (c) 2013 HJGauss. All rights reserved.
+//  Created by Enrico Opri.
+//  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
 #import "FWF_Utils.h"
 #import "ClassUtility.h"
 #import "newOBJDataTypes.h"
-#import "commonClassExtensions.h"
 
 #import "FWFEntity.h"
 #import "FWF_Costants.h"
 #import "FWFRelationship_XToOne.h"
 #import "FWFRelationship_OneToMany.h"
 #import "FWFRelationship_ManyToMany.h"
-#import "NSMutableDictionary-ext1.h"
 
 @implementation FWF_Utils
 
@@ -77,15 +74,5 @@
     return item;
 }
 
-+ (NSString *) genRandStringLength: (int) len {
-    NSString *letters = @"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    NSMutableString *randomString = [NSMutableString stringWithCapacity: len];
-    
-    for (int i=0; i<len; i++) {
-        [randomString appendFormat: @"%C", [letters characterAtIndex: arc4random() % [letters length]]];
-    }
-    
-    return randomString;
-}
 
 @end
