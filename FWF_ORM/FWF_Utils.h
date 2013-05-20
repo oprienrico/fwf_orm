@@ -15,4 +15,7 @@
 + (NSDictionary *) filterFK:(NSDictionary *) dictio;//unused
 + (NSMutableDictionary *) filterFKMutable:(NSMutableDictionary *) dictio;//unused
 + (id) setItemFromFMDBDictio:(NSDictionary *) dictio withClass:(Class) cl;
+
++ (NSString *) genRandStringLength: (int) len;
+
 @end

@@ -54,10 +54,10 @@
         
         int columnIdx = 0;
         for (columnIdx = 0; columnIdx < columnCount; columnIdx++) {
-            
-            NSString *columnName = [self columnNameForIndex:columnIdx];
-            id objectValue = [self objectForColumnIndex:columnIdx withOverridedTypes:[overridedTypes objectAtIndex:columnIdx]];
-            [dict setObject:objectValue forKey:columnName];
+            [dict
+                setObject:[self objectForColumnIndex:columnIdx withOverridedTypes:[overridedTypes objectAtIndex:columnIdx]]
+                forKey:[self columnNameForIndex:columnIdx]
+             ];
         }
         
         return dict;
