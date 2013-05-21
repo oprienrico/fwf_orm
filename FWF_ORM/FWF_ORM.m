@@ -18,9 +18,9 @@
 + (void) shrinkDownStorage{
     FMDbWrapper *db = [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
     //[FMDbWrapper databaseWithPath:[FMDbWrapper standardDbPath]];
-    //NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
+    NSLog(@"prevacuum\nfreelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
     [db vacuum];
-    //NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
+    NSLog(@"postvacuum\nfreelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
 }
 
 + (NSArray *) listClassesOfStoredEntities{

@@ -263,14 +263,23 @@
  */
 
 - (bool) exportToSqliteFileWithPath:(NSString *) path{
+    return [self exportToSqliteFileWithPath:path withVacuum:true];
+}
+
+- (bool) exportToSqliteFileWithPath:(NSString *) path withVacuum:(bool) isToBeVacuumed{
+    if (isToBeVacuumed) {
+        //we are exporting, so why not make our db nice and clean?(it will be slower i know)
+        [FWF shrinkDownStorage];
+    }
+    
     NSFileManager *fm = [NSFileManager defaultManager];
     NSString *to_path = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:path];
     
     //if file exist, delete it
-    if ([fm fileExistsAtPath:to_path]) 
+    if ([fm fileExistsAtPath:to_path])
         if(![fm removeItemAtPath:to_path error:nil])
             return false;
-        
+    
     if(![fm copyItemAtPath:[FMDbWrapper standardDbPath] toPath:to_path error:nil])
         return false;
     else{

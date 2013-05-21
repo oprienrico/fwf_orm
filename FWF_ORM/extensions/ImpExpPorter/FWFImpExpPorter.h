@@ -59,7 +59,10 @@
 
 /*  DATABASE(SQLITE) IMPORT/EXPORT  */
 //exports the data to sqlite file (overwriting any existent file with the same name). Returns false if it encounters problems while saving.
+//this method forces vacuuming by calling [FWF shrinkDownStorage]
 - (bool) exportToSqliteFileWithPath:(NSString *) path;
+//this method is the same but the vacuum can be disabled
+- (bool) exportToSqliteFileWithPath:(NSString *) path withVacuum:(bool) isToBeVacuumed;
 //overwrites (or inits) the current database with the default "templatedb.sqlite" (it must be available in the folder where the program is executed, remember to add it in the copy boundle in Build Phases)
 - (bool) overwriteDataWithTemplateDb;
 //overwrites (or inits) the current database with the one provided in the path (considered as template)
