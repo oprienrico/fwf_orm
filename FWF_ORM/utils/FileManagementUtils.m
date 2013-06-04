@@ -23,12 +23,10 @@
 + (NSString *) standardAppSupportFolderPath{
 #if TARGET_OS_IPHONE
     // iOS
-    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return document_dir;
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 #elif TARGET_IPHONE_SIMULATOR
     // iOS Simulator
-    NSString *documents_dir = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
-    return document_dir;
+    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 #elif TARGET_OS_MAC
     // Other kinds of Mac OS
     NSFileManager *fileManager = [NSFileManager defaultManager];
