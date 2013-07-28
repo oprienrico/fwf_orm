@@ -11,7 +11,7 @@
 #import "commonClassExtensions.h"
 #import "newOBJDataTypes.h"
 #import "FWF_Costants.h"
-#import "FMDbWrapper.h"
+#import "FWFORMDbWrapper.h"
 #import "FWFEntity.h"
 #import "FWF_Utils.h"
 

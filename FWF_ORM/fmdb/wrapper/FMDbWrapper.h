@@ -17,7 +17,7 @@
 
 @interface FMDbWrapper : FMDatabase
 
-+ (NSString *) standardDbPath;
++ (NSString *) defaultDbPath;
 
 - (id) initDatabase;
 - (id) initDatabaseWithForeignKeys;

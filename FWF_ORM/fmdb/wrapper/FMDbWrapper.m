@@ -44,13 +44,13 @@
 
 */
 
-+ (NSString *) standardDbPath{
++ (NSString *) defaultDbPath{
     return [[FileManagementUtils standardAppSupportFolderPath] stringByAppendingPathComponent:@"database.sqlite"];
 }
 
 - (id) initDatabase{
     //try to init db
-    self = [FMDbWrapper databaseWithPath:[FMDbWrapper standardDbPath]];
+    self = [[self class] databaseWithPath:[[self class] defaultDbPath]];
     if (![self open]){
         NSLog(@"Failed to open database!");
         return nil;
@@ -70,10 +70,10 @@
 }
 
 - (id) initDatabaseWithForeignKeys{
-    NSString *db_path = [FMDbWrapper standardDbPath];
+    NSString *db_path = [[self class] defaultDbPath];
     
     //try to init db
-    self = [FMDbWrapper databaseWithPath:db_path];
+    self = [[self class] databaseWithPath:db_path];
     if ([self open]){
         [self executeUpdate:@"PRAGMA foreign_keys=ON;"];
     }else {
@@ -85,10 +85,10 @@
 }
 
 - (id) initDatabaseWithoutForeignKeys{
-    NSString *db_path = [FMDbWrapper standardDbPath];
+    NSString *db_path = [[self class] defaultDbPath];
     
     //try to init db
-    self = [FMDbWrapper databaseWithPath:db_path];
+    self = [[self class] databaseWithPath:db_path];
     if ([self open]){
         [self executeUpdate:@"PRAGMA foreign_keys=OFF;"];
     }else {
@@ -112,16 +112,16 @@
 }
 
 + (bool) databaseExist{
-    return [[NSFileManager defaultManager] fileExistsAtPath:[FMDbWrapper standardDbPath]];
+    return [[NSFileManager defaultManager] fileExistsAtPath:[[self class] defaultDbPath]];
 }
 
 + (bool) resetDatabase{
-    NSString *db_path = [FMDbWrapper standardDbPath];
+    NSString *db_path = [self defaultDbPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     if(![fileManager removeItemAtPath:db_path error:nil])
         return false;
     //init a db
-    FMDbWrapper *db = [FMDbWrapper databaseWithPath:[FMDbWrapper standardDbPath]];
+    FMDbWrapper *db = [self databaseWithPath:[self defaultDbPath]];
     
     if ([db open]){
         //[db executeUpdate:@"PRAGMA auto_vacuum=1"];
@@ -134,7 +134,7 @@
 }
 
 + (void) deleteDatabase{
-    NSString *db_path = [FMDbWrapper standardDbPath];
+    NSString *db_path = [self defaultDbPath];
     NSFileManager *fileManager = [NSFileManager defaultManager];
     [fileManager removeItemAtPath:db_path error:nil];
 }
@@ -168,7 +168,7 @@
 
 + (bool) createDatabaseWithTemplateDbFromPath:(NSString *) template_path byOverwriting:(bool)isToOverwrite{
     NSFileManager *fm = [NSFileManager defaultManager];
-    NSString *db_path = [FMDbWrapper standardDbPath];
+    NSString *db_path = [self defaultDbPath];
     
     //fix path search (if it doesn't start from radix, make path relative to current app bundle position)
     if ([template_path characterAtIndex:0]!='/')
@@ -185,7 +185,7 @@
         if(![fm removeItemAtPath:db_path error:nil])
             return false;
     }
-        
+    
     if(![fm copyItemAtPath:template_path toPath:db_path error:nil])
         return false;
     else

@@ -17,7 +17,7 @@
 #import "FWFRelationship_ManyToMany.h"
 
 @interface FWFEntity (FWFImpExpPorter)
--(void) createTableWithDb:(FMDbWrapper *)db;
+-(void) createTableWithDb:(FWFORMDbWrapper *)db;
 @end
 
 @implementation FWFEntity (FWFImpExpPorter)
@@ -37,7 +37,7 @@
     return self;
 }
 
-- (bool) forceSaveWithDbObj:(FMDbWrapper *)database{
+- (bool) forceSaveWithDbObj:(FWFORMDbWrapper *)database{
     //obtain value from object attributes
     NSMutableDictionary *valuesDictio = [[self getAttributesValues] mutableCopy];
     NSMutableDictionary *compatibleValuesDictio = [[NSMutableDictionary alloc] init];
@@ -82,7 +82,7 @@
         if ([compatibleValuesDictio count] < 1)//do not execute query if is not allowed null entity
             return true;
     
-    NSString *sql=[NSString stringWithFormat:@"%@ pk) %@ %lu)",sql1,sql2,[self pk]];//force insert(meaning that we also set the pk)
+    NSString *sql=[NSString stringWithFormat:@"%@ pk) %@ %lu)",sql1,sql2,(long)[self pk]];//force insert(meaning that we also set the pk)
     
     FWFLog(@"INSERT query : %@",sql);
     
@@ -222,7 +222,7 @@
         NSArray *listEntitiesToSave = [unarchiver decodeObjectForKey:@"l"];
         NSArray *list = nil;
         
-        FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
+        FWFORMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
         [db beginTransaction];
         
         for (NSString *entName in listEntitiesToSave) {
@@ -244,7 +244,7 @@
     
         [unarchiver finishDecoding];
     
-        FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
+        FWFORMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
         [db beginTransaction];
         [[NSClassFromString(className) alloc] createTableWithDb:db];//create table if not exist
         
@@ -280,7 +280,7 @@
         if(![fm removeItemAtPath:to_path error:nil])
             return false;
     
-    if(![fm copyItemAtPath:[FMDbWrapper standardDbPath] toPath:to_path error:nil])
+    if(![fm copyItemAtPath:[FWFORMDbWrapper defaultDbPath] toPath:to_path error:nil])
         return false;
     else{
         NSLog(@"exported file to:\n%@",to_path);
@@ -288,9 +288,9 @@
     }
 }
 - (bool) overwriteDataWithTemplateDbFromPath:(NSString *)path{
-    return [FMDbWrapper overwriteDatabaseWithTemplateDbFromPath:path];
+    return [FWFORMDbWrapper overwriteDatabaseWithTemplateDbFromPath:path];
 }
 - (bool) overwriteDataWithTemplateDb{
-    return [FMDbWrapper overwriteDatabaseWithTemplateDbFromPath:@"templatedb.sqlite"];
+    return [FWFORMDbWrapper overwriteDatabaseWithTemplateDbFromPath:@"templatedb.sqlite"];
 }
 @end

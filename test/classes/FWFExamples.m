@@ -280,7 +280,7 @@
     
     NSLog(@"exporting success: %s", [[FWF ImpExp] exportToSqliteFileWithPath:@"templatedb.sqlite"] ? "true" : "false");
     
-    NSLog(@"clening and reserialize (it will return an empty set)");
+    NSLog(@"cleaning and reserialize (it will return an empty set)");
     [FWF resetStorage];
     [[EntityTest alloc] initEntityPersistence];
     NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
@@ -314,7 +314,7 @@
     
     NSLog(@"exporting success: %s", [[EntityTest ImpExp] exportToBinaryFileWithPath:@"test"] ? "true" : "false");
     
-    NSLog(@"clening and reserialize (it will return an empty set)");
+    NSLog(@"cleaning and reserialize (it will return an empty set)");
     [FWF resetStorage];
     [[EntityTest alloc] initEntityPersistence];
     NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
@@ -349,7 +349,7 @@
     
     NSLog(@"exporting success: %s", [[FWF ImpExp] exportToBinaryFileWithPath:@"test"] ? "true" : "false");
     
-    NSLog(@"clening and reserialize (it will return an empty set)");
+    NSLog(@"cleaning and reserialize (it will return an empty set)");
     [FWF resetStorage];
     [[EntityTest alloc] initEntityPersistence];
     NSLog(@"%@", [[[EntityTest objects] all] serializeWithDictionary]);
@@ -384,7 +384,7 @@
         duration+=[NSDate timeIntervalSinceReferenceDate]-start;
     }
     NSLog(@"time %lf", duration/ntimes);
-    FMDbWrapper *db = [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
+    FWFORMDbWrapper *db = [[FWFORMDbWrapper alloc] initDatabaseWithoutForeignKeys];
     NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
     [db close];
     
@@ -401,7 +401,7 @@
         [single2 save];
     }
     
-    db = [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
+    db = [[FWFORMDbWrapper alloc] initDatabaseWithoutForeignKeys];
     NSLog(@"freelist_count: %d\npage_count: %d", [db freelist_count], [db page_count]);
     NSLog(@"autovacuum: %d", [db intForQuery:@"PRAGMA auto_vacuum"]);
     [db close];

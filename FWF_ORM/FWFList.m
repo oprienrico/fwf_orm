@@ -63,7 +63,7 @@
 }
 
 - (NSMutableArray *) populateListWithSQL:(NSString *) sql{
-    FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK; //fk support not needed because we do only select queries (and not complex ones)
+    FWFORMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK; //fk support not needed because we do only select queries (and not complex ones)
     FWFLog(@"sql query:%@",sql);
     FMResultSet *result = [db executeQuery:sql];
 
@@ -182,7 +182,7 @@
 
 //delete selected elements
 - (void) deleteFromStorage{
-    FMDbWrapper *db = FWF_STD_DB_ENGINE;
+    FWFORMDbWrapper *db = FWF_STD_DB_ENGINE;
     [db beginTransaction];
 
     for( int i = 0; i < [list count]; i ++ ){

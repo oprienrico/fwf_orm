@@ -36,7 +36,7 @@
 
 -(id) initWithPersistenceCheck{
     if(self = [self init]){
-        FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK; 
+        FWFORMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK; 
         [self createTableWithDb:db];
         [db close];
     }
@@ -116,13 +116,13 @@
 }
 
 -(void) initEntityPersistence{
-    FMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
+    FWFORMDbWrapper *db = FWF_STD_DB_ENGINE_NO_FK;
     [self checkForeignKeysInitialization];
     [self createTableWithDb:db];
     [db close];
 }
 
--(void) createTableWithDb:(FMDbWrapper *)db{
+-(void) createTableWithDb:(FWFORMDbWrapper *)db{
 
     if(![db tableExists:[self entityName]]){
         __block NSString *sql = [NSString stringWithFormat: @"CREATE TABLE %@ (pk INTEGER PRIMARY KEY AUTOINCREMENT  NOT NULL ",[self entityName]];
@@ -183,7 +183,7 @@
     return [FWF_Utils filterFKMutable:attributes];
 }
 
-- (bool) saveWithDbObj:(FMDbWrapper *)database{
+- (bool) saveWithDbObj:(FWFORMDbWrapper *)database{
     //obtain value from object attributes
     NSMutableDictionary *valuesDictio = [[self getAttributesValues] mutableCopy];
     NSMutableDictionary *compatibleValuesDictio = [[NSMutableDictionary alloc] init];
@@ -286,20 +286,20 @@
     //set object to modified state, set mod true when saving an entity (and not saving directly to database)
     //mod = TRUE;
     //open database
-    FMDbWrapper *db = FWF_STD_DB_ENGINE;
+    FWFORMDbWrapper *db = FWF_STD_DB_ENGINE;
     
     [self saveWithDbObj:db];
     
     [db close];
 }
 
-- (bool) deleteWithDbObj:(FMDbWrapper *)database{
+- (bool) deleteWithDbObj:(FWFORMDbWrapper *)database{
     return [database executeUpdate:[[NSString alloc] initWithFormat:@"DELETE FROM %@ WHERE pk=%lu", [self entityName], (long)[_pkOBJ unsignedIntegerValue]]];
 }
 
 - (void) deleteFromStorage{
     __deleted = TRUE;
-    FMDbWrapper *db = FWF_STD_DB_ENGINE;
+    FWFORMDbWrapper *db = FWF_STD_DB_ENGINE;
     
     [self deleteWithDbObj:db];
     

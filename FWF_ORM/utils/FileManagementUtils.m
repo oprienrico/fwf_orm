@@ -24,14 +24,15 @@
 #if TARGET_OS_IPHONE
     // iOS
     return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+
 #elif TARGET_IPHONE_SIMULATOR
     // iOS Simulator
-    return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    return [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
 #elif TARGET_OS_MAC
     // Other kinds of Mac OS
     NSFileManager *fileManager = [NSFileManager defaultManager];
     
-    NSString *folder = [NSString stringWithFormat:@"~/Library/Application Support/%@/blob/",[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutablePath"] lastPathComponent]];
+    NSString *folder = [NSString stringWithFormat:@"~/Library/Application Support/%@/",[[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleExecutablePath"] lastPathComponent]];
     folder = [folder stringByExpandingTildeInPath];
     
     if ([fileManager fileExistsAtPath: folder] == NO){
@@ -41,7 +42,7 @@
     
     return folder;
 #else
-    @throw [NSException exceptionWithName:@"FM_EXCEPTION_UNSUPPORTED_PLATFORM" reason:@"This platform is not recognized so it cannot be supported. Could not get the required base folder." userInfo:nil];
+    @throw [NSException exceptionWithName:@"FMDB_EXCEPTION_UNSUPPORTED_PLATFORM" reason:@"This platform is not recognized so it cannot be supported. Could not get the required base folder." userInfo:nil];
 #endif
     
 }

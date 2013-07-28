@@ -8,8 +8,8 @@
 #import "FWF_Config.h"
 
 //#define FWF_MAIN_DB_ENGINE [[FMDbWrapper alloc] initDatabaseFromTemplateWithReset:YES]
-#define FWF_STD_DB_ENGINE [[FMDbWrapper alloc] initDatabaseWithForeignKeys]
-#define FWF_STD_DB_ENGINE_NO_FK [[FMDbWrapper alloc] initDatabaseWithoutForeignKeys];
+#define FWF_STD_DB_ENGINE [[FWFORMDbWrapper alloc] initDatabaseWithForeignKeys]
+#define FWF_STD_DB_ENGINE_NO_FK [[FWFORMDbWrapper alloc] initDatabaseWithoutForeignKeys];
 
 
 /*

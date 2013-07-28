@@ -5,9 +5,9 @@
 //  Copyright (c) 2013 Enrico Opri. All rights reserved.
 //
 
-@interface FWF : NSObject
+@interface FWF
 
-+ (void) resetStorage;
++ (bool) resetStorage;
 + (void) shrinkDownStorage;
 
 + (NSArray *) listClassesOfStoredEntities;

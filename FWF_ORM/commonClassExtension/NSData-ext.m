@@ -7,7 +7,7 @@
 //
 
 #import "NSData-ext.h"
-
+#import "FWF_Utils.h"
 
 @implementation NSData(FWF)
 
@@ -20,21 +20,27 @@
 }
 
 - (id) fmdbCompatibleValue{
-	return [self copy];
+    if ([self length]<1000) {
+        return [self copy];
+    }else{
+        return [self copy];
+    }
 }
-
 
 + (id)objectWithFMDBCompatibleType:(id) value{
 	if (value == nil)
 		return nil;
     
     //check if is NSData
-    if (![value isKindOfClass:[NSData class]])
+    if (!([value isKindOfClass:[NSData class]]||[value isKindOfClass:[NSString class]]))
 		return nil;//maybe it's better to throw an exception
     if ([value length] == 0)
 		return nil;
-
-	return [value copy];
+    if ([value isKindOfClass:[NSData class]]) {
+        return [value copy];
+    }else{
+        //get the file
+    }
 }
 
 @end

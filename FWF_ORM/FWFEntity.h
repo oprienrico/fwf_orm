@@ -11,7 +11,7 @@
 
 #import "commonClassExtensions.h"
 
-#import "FMDbWrapper.h"
+#import "FWFORMDbWrapper.h"
 
 @class FWFList;
 
@@ -53,7 +53,7 @@
 
 + (FWFList *) objects;
 
-- (bool) deleteWithDbObj:(FMDbWrapper *)database;
+- (bool) deleteWithDbObj:(FWFORMDbWrapper *)database;
 - (void) deleteFromStorage;
 
 - (NSDictionary *) getValuesDictionary;

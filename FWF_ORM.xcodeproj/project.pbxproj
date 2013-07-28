@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63C67924177228930088881B /* FWFORMDbWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 63C67923177228930088881B /* FWFORMDbWrapper.m */; };
 		DF331F34173309C400AC4513 /* EntityTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = DF331F33173309C400AC4513 /* EntityTest1.m */; };
 		DF354017173165E700DAF45C /* EntityTest.m in Sources */ = {isa = PBXBuildFile; fileRef = DF354016173165E700DAF45C /* EntityTest.m */; };
 		DF547ECA174917BF00320450 /* FWFImpExpPorter.m in Sources */ = {isa = PBXBuildFile; fileRef = DF547EC9174917BF00320450 /* FWFImpExpPorter.m */; };
@@ -66,6 +67,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		63C67922177228930088881B /* FWFORMDbWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FWFORMDbWrapper.h; sourceTree = "<group>"; };
+		63C67923177228930088881B /* FWFORMDbWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FWFORMDbWrapper.m; sourceTree = "<group>"; };
 		DF331F32173309C400AC4513 /* EntityTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest1.h; sourceTree = "<group>"; };
 		DF331F33173309C400AC4513 /* EntityTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EntityTest1.m; sourceTree = "<group>"; };
 		DF354015173165E700DAF45C /* EntityTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EntityTest.h; sourceTree = "<group>"; };
@@ -257,6 +260,8 @@
 				DF547ECC1749439A00320450 /* FWF_ORMLib.h */,
 				DF91D9641730A12700E1AD1E /* FWF_ORM.h */,
 				DF91D9651730A12700E1AD1E /* FWF_ORM.m */,
+				63C67922177228930088881B /* FWFORMDbWrapper.h */,
+				63C67923177228930088881B /* FWFORMDbWrapper.m */,
 				DF91D9631730A12700E1AD1E /* FWF_Costants.h */,
 				DF91D9621730A12700E1AD1E /* FWF_Config.h */,
 				DF91D9661730A12700E1AD1E /* FWF_Utils.h */,
@@ -462,6 +467,7 @@
 				DF331F34173309C400AC4513 /* EntityTest1.m in Sources */,
 				DF547ECA174917BF00320450 /* FWFImpExpPorter.m in Sources */,
 				DF657C6C174ACBEA007FC5A0 /* FileManagementUtils.m in Sources */,
+				63C67924177228930088881B /* FWFORMDbWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

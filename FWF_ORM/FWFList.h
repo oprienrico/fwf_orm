@@ -9,8 +9,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "FMDbWrapper.h"
-
 @interface FWFList : NSObject <NSCopying>
 
 -(id) initWithClass:(Class) cl;

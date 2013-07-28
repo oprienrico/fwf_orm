@@ -12,7 +12,7 @@
 #import "ClassUtility.h"
 #import "newOBJDataTypes.h"
 #import "commonClassExtensions.h"
-#import "FMDbWrapper.h"
+#import "FWFORMDbWrapper.h"
 
 #import "FWF_ORM.h"
 #import "FWFList.h"
